@@ -1,0 +1,41 @@
+diff --git a/android/app/src/main/java/dev/nxnative/android/GameActivity.java b/android/app/src/main/java/dev/nxnative/android/GameActivity.java
+--- a/android/app/src/main/java/dev/nxnative/android/GameActivity.java
++++ b/android/app/src/main/java/dev/nxnative/android/GameActivity.java
+@@ -1350,11 +1350,19 @@
+         for (int i = 0; i <= logs.length - KEEP_LOGS; i++) { logs[i].delete(); ExitWatch.digestOf(logs[i]).delete(); }   // and its digest (the notice's), if any
+     }
+ 
+-    /** The last lines of the log over the surface, once a second: until the game's first frame, then only with the setting on (TouchControls.showLog), or after a crash */
+-    private boolean drawing, failed;
++    /** Show startup progress until the host presents. During play, show the log only when requested. */
++    private boolean drawing;
++    private final float[] logFrameRate = new float[6];   // Native.fps reports whether the host has presented recently
+     private void tail() {
+         if (log == null) return;
+         if (stopped || paused) { ui.postDelayed(this::tail, 2000); return; }   // the log does not move while the game is suspended
++        ui.postDelayed(this::tail, 1000);
++        if (!drawing) drawing = Native.fps(logFrameRate);
++        boolean showLog = TouchControls.showLog(this);
++        if (drawing && !showLog) {
++            overlay.setVisibility(View.GONE);
++            return;
++        }
+         try (RandomAccessFile r = new RandomAccessFile(log, "r")) {
+             long n = r.length(), from = Math.max(0, n - 2048);
+             byte[] b = new byte[(int) (n - from)];
+@@ -1362,14 +1370,12 @@
+             r.readFully(b);
+             String text = new String(b, StandardCharsets.UTF_8);
+             if (text.contains("[nvn] frame ") || text.contains("[longframe]") || text.contains("window frame rate")) drawing = true;   // the host logs these once frames are presented
+-            if (text.contains("CRASH sig=") || text.contains("FATAL")) failed = true;
+-            overlay.setVisibility(!drawing || failed || TouchControls.showLog(this) ? View.VISIBLE : View.GONE);
++            overlay.setVisibility(!drawing || showLog ? View.VISIBLE : View.GONE);
+             String[] lines = text.split("\n");
+             StringBuilder s = new StringBuilder();
+             for (int i = Math.max(from > 0 ? 1 : 0, lines.length - 8); i < lines.length; i++) s.append(lines[i]).append('\n');
+             overlay.setText(s.toString().trim());
+         } catch (IOException ignored) { /* next time */ }
+-        ui.postDelayed(this::tail, 1000);
+     }
+ 
+     // ---- The host's side of the Activity: input devices, audio focus and route, motion, lifecycle ----
