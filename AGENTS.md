@@ -18,17 +18,38 @@
 - Each game's constants and shader tables form a game profile in `dm/games/<id>/`, where `<id>` is the base game's title ID: `game.tsv` plus the tables (and `patches.py` when the rewriter has patches for its builds). Donkey Kong Bananza's profile is `040074A01BF12000`. Tools pick it with `DM_GAME`, `make -C dm/host` and the unit tests with `GAME`, the APK with `-PnxGames`. The tools have no default game: set it every time. Put per-game values in the profile, not in code ([dm/games/README.md](dm/games/README.md)).
 - Prefer general optimizations and fixes to game-specific rules. Performance work (frame pacing, power, heat, memory, load times) counts as much as correctness. First look for a change that holds for every game: Horizon / NVN / Vulkan semantics, or what the binary, its SDK version, its imports or its files show. Use a game-specific rule (a profile key, a rewriter cut, a build-ID gate, a per-game branch in the host) only when it is absolutely necessary, that is, when no general rule can do it. Driver differences key on what the driver reports (`driverID`, features), never on its name.
 - Find a bug's root cause and fix it there; do not just work around it. Before changing code, find why it happens: the faulting instruction and its decompilation, the value that went wrong and who wrote it, the Horizon / NVN / Vulkan semantics the host or the translator gets wrong. Then fix that place. A change that only hides the symptom (a stub, a skipped call, a clamp, a retry, a sleep or a longer timeout, a cache flush, a profile key that turns a feature off) is a workaround: use one only when the cause is known and lies where it cannot be fixed (the game's own code, which a rewriter cut changes deliberately, or a platform or driver limit), or when the user asks for a stopgap. Then say so in the code comment and in the game note or reference entry: the cause, or what is still unknown, marked open.
-- Per-build knowledge is keyed by the NSO build ID: rewriter cuts, observation gates and frame-step stubs in the profile's `patches.py` (a game's own modules) or `dm/tools/sdk_patches.py` (Nintendo's `sdk` modules, which several games ship), which `dm/tools/patch_nso.py` (the general rewriter) loads, the profile's `build` rows, and host behaviour that uses fixed module addresses checks `module_t.build_id` (from `fixups.tsv`; `dm_main_build()`). When a new game build appears, carry addresses over with `dm/tools/nso_fnmap.py` and check them by disassembly; never let fixed addresses run on a build they were not found in. For automatic cuts across updates, opt individual patches into `MATCH_CUTS` only after verifying their function fingerprints and assumptions; follow [Function-matched cuts](docs/reference/rewriter.md#function-matched-cuts-for-unregistered-builds).
+- Follow the [upstream technical instructions](AGENTS-UPSTREAM.md) for per-build knowledge and shader translation.
 - Scripts the user runs live in `scripts/` and run from a terminal (non-zero exit on error); tools only agents or other scripts call stay under `dm/`.
 - Game files and anything extracted from them stay with the game's dump folder, never in this repository or the home folder (nearly full): the work folder `<dump folder>/<id>-work` for extraction, runs and analysis; `pack_android.py` writes `<id>-work/android-pack`. Tool venvs and large scratch data go there too. No local paths, phone serials, private repository names, personal e-mail addresses or internal IP addresses in any committed file.
 - Language: English everywhere (docs, code comments, log messages, script output, the app's text). Red log lines (something unimplemented or wrong) start with `[RED] `. Text that must match a game's own Chinese data is written as escapes (`"\xE8\xB5\xB7"`), never as characters.
-- The shader translation chain has one version for every game, `DMSH_CHAIN` in `dm/gfx/nvn/dmsh_chain.h`, which the host is compiled with and loads only libraries of. It covers the chain's tools: `dm/gfx/tools/dmsh_*` (`dmsh_build.py`, `dmsh_chain.py`, `dmsh_fetch.py`, `dmsh_vin.py`, `dmsh_pull.py` and `dmsh_pull.metal`, `dmsh_geometry.py`, `dmsh_facts.py`), `Program.cs`, `ios_metal.py`, `dm/gfx/nvn/dmsh_abi.h` and `dmsh_chain.lock`. A profile's own inputs (`shader_map.tsv`, `shader_facts.tsv`, `shader_pairs.tsv`, `bf_want.tsv`, its `shader_*` / `nvn_*` keys) are not part of it: they are in each shader's cache key, and their digest stamps the libraries (`b-<V>/inputs.tsv`). The Android library has its own version on top of it, `DMSH_VK_CHAIN` (and `DMSH_VK_ABI`) in `dm/gfx/nvn/dmsh_chain_vk.h`, covering `DMSH_CHAIN`, `vk_android_build.py`, `vk_android_spv.py`, `vk_android_delta.py` and `dmsh_abi_vk.h` ([Versions](android/SHADERS.md#versions)). The procedure:
-  1. After changing a chain tool, run `dmsh_chain.py --header` once and commit `dm/gfx/nvn/dmsh_chain.h` with the change. After that, or after changing a Vulkan chain file, run `vk_android_build.py --header` and commit `dm/gfx/nvn/dmsh_chain_vk.h` (the tests catch a stale header).
-  2. After that, or after changing a profile's inputs, rebuild that profile's shaders: a full `dmsh_build.py` run stamps its libraries and writes the profile's `c1_full.tsv` and `cb_extent.tsv` (git ignores them), then the Android library ([Build](android/SHADERS.md#build)). Give each game its own output directory.
-  3. Rebuild the host and the APK.
-
-  The translator is `dm/gfx/tools/dmsh_xlate_bin`, which matches `dmsh_chain.lock`; a fresh `dotnet publish` does not.
 - Checking a change ([06-dev-loop.md](docs/agents/06-dev-loop.md#checking-a-change-for-android)): the unit tests (`make -C dm/host/tests GAME=<id> run`, and `dm/gfx/tests` where the change reaches graphics), the Python tests in `dm/tools/tests` (they include the launcher's JVM tests, `test_android_*.py`), then short phone runs. Phone runs use the test app `dev.nxnative.android` only, never the play app `dev.nxnative.android.play` or the release; never delete or overwrite a save folder ([Saves](android/TESTING.md#saves)); about 20 s of roaming play per run is enough ([Fast test runs](android/TESTING.md#fast-test-runs)); every round includes a run on a Turnip driver through `DM_VK_DRIVER` ([Custom GPU drivers](android/README.md#custom-gpu-drivers)) as well as the system driver; force-stop the test app afterwards. The pull request says what ran, on which driver, and what was not.
 - The Mac and iOS path (Metal host, IPAs) is upstream's; Android work does not need to build or test it.
 - Pull requests bring source only: no binary (`dm/gfx/tools/dmsh_xlate_bin`, `.so`, `.dll`, APK, GPU driver), no `dmsh_chain.lock` or chain header, no edit under `dm/third_party/`, no branch carrying commits the public branch no longer has. Every binary is built here from source; vendored code changes only as a documented version bump. Review with [07-pr-review.md](docs/agents/07-pr-review.md) and `dm/tools/pr_risk.py` before any merge.
 - Commit only when asked, with this checkout's git identity; public commits come only from the publish scripts.
+
+## Peanuts Pro FreeCam
+
+### Comunicação
+
+- Responda sempre em português brasileiro. O proprietário não é programador e gerencia o projeto pelo celular REDMAGIC 11 Air com 16 GB de RAM e 512 GB de armazenamento.
+- Execute as alterações solicitadas diretamente no projeto. Evite pedir ao proprietário que edite código manualmente.
+- Explique os resultados de forma simples e objetiva. Forneça links diretos para as compilações e os arquivos.
+
+### Projeto
+
+- Repositório: `joeltutors174-gif/peanuts-native`. Versão estável de referência: Aurora v1.4. Preserve as versões anteriores como backup.
+- Preserve o identificador do aplicativo e a assinatura digital permanente. Nunca exponha as chaves de assinatura.
+- Preserve os saves, as configurações e os jogos importados.
+- Mantenha os 76 perfis oficiais na edição Aurora e o catálogo pesquisável em três colunas com capas offline.
+- Mantenha a câmera livre configurável individualmente por jogo.
+- Preserve o tema grafite e lavanda Aurora. Use a logo P com degradê azul, roxo e rosa.
+
+### Desenvolvimento
+
+- Analise os arquivos antes de modificá-los. Preserve as funcionalidades que já funcionam, salvo quando a alteração exigir mudanças nelas.
+- Crie versões separadas para novas melhorias. Valide o código antes de publicar e informe claramente as falhas e os testes pendentes.
+- Use o GitHub Actions para compilar os APKs. Preserve os créditos dos desenvolvedores originais.
+
+### Próxima melhoria
+
+- Aurora v1.5: corrigir o ícone externo do aplicativo Android em proporção 1:1.
