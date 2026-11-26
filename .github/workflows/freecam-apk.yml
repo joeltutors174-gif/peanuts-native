@@ -90,10 +90,51 @@ jobs:
           chmod +x gradlew
           ./gradlew --no-daemon -PnxPackStage="$RUNNER_TEMP/nxpacker/stage" -PnxApp=peanuts -PnxAppId=freecam -PnxLabel='Peanuts Pro FreeCam' -PnxGames=01002DA013484000 apk
 
+      - name: Sign APK permanently
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          umask 077
+
+          KEYSTORE="$RUNNER_TEMP/peanuts-freecam.p12"
+          trap 'rm -f "$KEYSTORE" "$RUNNER_TEMP/aligned.apk"' EXIT
+
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE"
+
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/36.0.0"
+
+          mkdir -p signed-apk
+
+          shopt -s nullglob
+          apks=(android/app/out/*.apk)
+          test "${#apks[@]}" -gt 0
+
+          for apk in "${apks[@]}"; do
+            NAME=$(basename "$apk")
+
+            "$BUILD_TOOLS/zipalign" -P 16 -f 4 \
+              "$apk" "$RUNNER_TEMP/aligned.apk"
+
+            "$BUILD_TOOLS/apksigner" sign \
+              --ks "$KEYSTORE" \
+              --ks-type PKCS12 \
+              --ks-key-alias peanuts \
+              --ks-pass env:KEYSTORE_PASSWORD \
+              --key-pass env:KEY_PASSWORD \
+              --out "signed-apk/$NAME" \
+              "$RUNNER_TEMP/aligned.apk"
+
+            "$BUILD_TOOLS/apksigner" verify \
+              --verbose --print-certs "signed-apk/$NAME"
+          done
+
       - name: Upload APK
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: Peanuts-Pro-FreeCam-v1.0
-          path: android/app/out/*.apk
+          name: Peanuts-Pro-FreeCam-Signed
+          path: signed-apk/*.apk
           if-no-files-found: error
