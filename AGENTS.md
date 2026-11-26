@@ -48,9 +48,9 @@
 
 - Analise os arquivos antes de modificá-los. Preserve as funcionalidades que já funcionam, salvo quando a alteração exigir mudanças nelas.
 - Crie versões separadas para novas melhorias. Valide o código antes de publicar e informe claramente as falhas e os testes pendentes.
-- A cada versão Aurora, crie um workflow com arquivo e nome próprios na branch principal, identifique a versão nas novas execuções e no APK e preserve os workflows anteriores com seus nomes e históricos.
+- Avance a numeração a cada atualização Aurora (v1.5 → v1.6 → v1.7). Use a mesma versão no app, no APK, no nome do workflow e no título das execuções. Incremente o código de versão do Android. Crie um workflow próprio na branch principal e preserve os nomes e históricos anteriores.
 - Use o GitHub Actions para compilar os APKs. Preserve os créditos dos desenvolvedores originais.
 
-### Próxima melhoria
+### Versões Aurora
 
-- Aurora v1.5: corrigir o ícone externo do aplicativo Android em proporção 1:1.
+- Aurora v1.5 corrige o ícone externo do Android em proporção 1:1. A próxima atualização será a v1.6.
