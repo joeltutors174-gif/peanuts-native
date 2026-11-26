@@ -1,0 +1,135 @@
+--- a/dm/host/android/input_map.h
++++ b/dm/host/android/input_map.h
+@@ -35,6 +35,7 @@
+ int nxin_map_parse(nxin_map *m, const char *spec, char *bad, size_t nbad);
+ typedef struct {
+     const nxin_map *map;           // DM_PAD_MAP, or NULL: the default mapping
++    int invert_l;                  // opt-in: invert the emulated Switch L state
+     uint64_t keys;                 // buttons held from key events
+     float lx, ly, rx, ry;          // sticks as Android reports them (-1..1, y down)
+     float hat_x, hat_y, lt, rt;    // D-pad hat (-1, 0, 1) and the triggers (0..1)
+--- a/dm/host/android/input_map.c
++++ b/dm/host/android/input_map.c
+@@ -103,6 +103,7 @@
+     uint64_t b = p->keys | (p->lt_on ? mapped(m, SRC_L2, DM_BTN_ZL) : 0) | (p->rt_on ? mapped(m, SRC_R2, DM_BTN_ZR) : 0);
+     if (p->hat_x < -0.5f) b |= mapped(m, SRC_LEFT, DM_BTN_LEFT); if (p->hat_x > 0.5f) b |= mapped(m, SRC_RIGHT, DM_BTN_RIGHT);
+     if (p->hat_y < -0.5f) b |= mapped(m, SRC_UP, DM_BTN_UP); if (p->hat_y > 0.5f) b |= mapped(m, SRC_DOWN, DM_BTN_DOWN);
++    if (p->invert_l) b ^= DM_BTN_L; // apply after button remapping
+     *buttons = b;
+     nxin_stick(p->lx, p->ly, dz, lx, ly); nxin_stick(p->rx, p->ry, dz, rx, ry);
+ }
+--- a/dm/host/android/input_android.c
++++ b/dm/host/android/input_android.c
+@@ -66,6 +66,7 @@
+     dm_touch t[16]; int n = nxin_touch_fingers(&g_touch, (nxin_finger *)t, 16);
+     dm_touch_set(t, n);
+ }
++static int invert_l_enabled(void) { const char *e = getenv("DM_PAD_INVERT_L"); return e && *e == '1'; }
+ static nxin_map g_map; static int g_map_on = -1;   // DM_PAD_MAP (the launcher's Button mapping), read once
+ static const nxin_map *pad_map(void) {   // under g_mu
+     if (g_map_on < 0) {
+@@ -76,6 +77,7 @@
+     }
+     return g_map_on ? &g_map : NULL;
+ }
++static void configure_pad(nxin_pad *p) { p->map = pad_map(); p->invert_l = invert_l_enabled(); }
+ // Controllers on players the game does not read move to free players it reads (pad_slot_fill), with their state, in the order they press a button, as a Switch's controller
+ // applet takes them: one moves on its own press (nxhost_input_key), and from hle_hid.c, when the supported npads change or the controller applet opens, the ones that pressed
+ // last move first. A disconnect moves no one: the freed player stays kept for its controller until another one presses. The launcher sees the new player through
+@@ -130,7 +132,7 @@
+     if (p < 0) { if (!had) LOG("[RED] input: device %d (%s): every player is taken", device, name ? name : "?"); return -1; }
+     if (!had) {
+         const char *e = getenv("DM_PAD_LABELLED");
+-        g_labelled[p] = e ? atoi(e) : labelled; memset(&g_pad[p], 0, sizeof g_pad[p]); g_pad[p].map = pad_map();   // 1: all four face buttons by label; 2: A and B by label, X and Y by position
++        g_labelled[p] = e ? atoi(e) : labelled; memset(&g_pad[p], 0, sizeof g_pad[p]); configure_pad(&g_pad[p]);   // 1: all four face buttons by label; 2: A and B by label, X and Y by position
+         g_since[p] = now_ns();
+         dm_pad_players(pad_slot_mask(&g_slots));
+         LOG("input: device %d (%s) is player %d%s", device, name && *name ? name : "unnamed", p + 1, g_labelled[p] == 1 ? ", face buttons by label" : g_labelled[p] == 2 ? ", A and B by label, X and Y by position" : "");
+@@ -166,7 +168,7 @@
+     if (p > 0) {
+         int lab = g_labelled[0]; g_labelled[0] = g_labelled[p]; g_labelled[p] = lab;
+         p = pad_slot_first(&g_slots, owner(device), name, &moved);
+-        for (int q = 0; q < DM_PLAYERS; q++) if (q == 0 || q == from) { memset(&g_pad[q], 0, sizeof g_pad[q]); g_pad[q].map = pad_map(); publish_pad(q); }
++        for (int q = 0; q < DM_PLAYERS; q++) if (q == 0 || q == from) { memset(&g_pad[q], 0, sizeof g_pad[q]); configure_pad(&g_pad[q]); publish_pad(q); }
+         dm_pad_players(pad_slot_mask(&g_slots));
+         if (moved > 0) LOG("input: device %d (%s) is player 1; player 1's device moves to player %d", device, name && *name ? name : "unnamed", moved + 1);
+         else LOG("input: device %d (%s) is player 1", device, name && *name ? name : "unnamed");
+@@ -272,7 +274,7 @@
+ static void input_hold(int on) {
+     pthread_mutex_lock(&g_mu);
+     g_held = on;
+-    for (int p = 0; p < DM_PLAYERS; p++) if (pad_slot_mask(&g_slots) >> p & 1) { memset(&g_pad[p], 0, sizeof g_pad[p]); g_pad[p].map = pad_map(); publish_pad(p); }
++    for (int p = 0; p < DM_PLAYERS; p++) if (pad_slot_mask(&g_slots) >> p & 1) { memset(&g_pad[p], 0, sizeof g_pad[p]); configure_pad(&g_pad[p]); publish_pad(p); }
+     touch_release_all();
+     pthread_mutex_unlock(&g_mu);
+ }
+@@ -332,7 +334,7 @@
+     g_slots = ns;
+     for (int p = 0; p < DM_PLAYERS; p++) {
+         g_labelled[p] = lab[p]; g_pm_cal[p] = cal[p]; g_pm_log[p] = plog[p]; g_since[p] = since[p];
+-        memset(&g_pad[p], 0, sizeof g_pad[p]); g_pad[p].map = pad_map(); publish_pad(p); dm_motion_clear(p);
++        memset(&g_pad[p], 0, sizeof g_pad[p]); configure_pad(&g_pad[p]); publish_pad(p); dm_motion_clear(p);
+         if (g_join.player[p]) LOG("controller applet: player %d is device %d (%s)", p + 1, device_of(g_join.player[p]), name_of(g_join.player[p]));
+     }
+     dm_pad_players(pad_slot_mask(&g_slots));
+@@ -604,7 +606,7 @@
+ void nxhost_audio_route_changed(void) { LOG("audio: the output device changed; opening the streams again"); dm_audio_reset(); }
+ static void input_release(void) {   // what is held when the app leaves the screen is let go: the game must not see a button stuck down
+     pthread_mutex_lock(&g_mu);
+-    for (int p = 0; p < DM_PLAYERS; p++) if (g_slots.owner[p]) { memset(&g_pad[p], 0, sizeof g_pad[p]); g_pad[p].map = pad_map(); dm_pad_set_player(p, 0, 0, 0, 0, 0); }
++    for (int p = 0; p < DM_PLAYERS; p++) if (g_slots.owner[p]) { memset(&g_pad[p], 0, sizeof g_pad[p]); configure_pad(&g_pad[p]); dm_pad_set_player(p, 0, 0, 0, 0, 0); }
+     touch_release_all();
+     pthread_mutex_unlock(&g_mu);
+ }
+--- a/dm/host/tests/t_android_input.c
++++ b/dm/host/tests/t_android_input.c
+@@ -30,6 +30,14 @@
+     nxin_pad_axis(&p, AA_Z, -0.5f); nxin_pad_axis(&p, AA_RZ, 0.05f);
+     nxin_pad_out(&p, 0.1f, &b, &lx, &ly, &rx, &ry);
+     CHECK(b == (DM_BTN_A | DM_BTN_R), "buttons %#llx", (unsigned long long)b);
++    p.invert_l = 1;
++    nxin_pad_out(&p, 0.1f, &b, &lx, &ly, &rx, &ry);
++    CHECK((b & DM_BTN_L) != 0, "inverted L on when released");
++    nxin_pad_key(&p, AK_BUTTON_L1, 1, 0);
++    nxin_pad_out(&p, 0.1f, &b, &lx, &ly, &rx, &ry);
++    CHECK((b & DM_BTN_L) == 0, "inverted L off when held");
++    nxin_pad_key(&p, AK_BUTTON_L1, 0, 0);
++    p.invert_l = 0;
+     CHECK(lx == 23170 && ly == 23170, "a diagonal at full tilt stays on the circle: %d %d", lx, ly);
+     CHECK(rx < 0 && rx > -DM_STICK_MAX / 2 && ry < 0, "right stick rescaled past the dead zone (y down on Android is y down here too): %d %d", rx, ry);
+     nxin_pad_axis(&p, AA_Z, 0.05f); nxin_pad_axis(&p, AA_RZ, -0.05f); nxin_pad_out(&p, 0.1f, &b, &lx, &ly, &rx, &ry);
+--- a/android/app/src/main/java/dev/nxnative/android/Prefs.java
++++ b/android/app/src/main/java/dev/nxnative/android/Prefs.java
+@@ -72,6 +72,10 @@
+     /** The in-game panel's Player 1 (PadOrder): the chosen gamepad's InputDevice descriptor, for every game; "" = automatic */
+     static String padFirst(Context c) { return of(c).getString("pad_first", ""); }
+     static void padFirst(Context c, String key) { of(c).edit().putString("pad_first", key == null ? "" : key).commit(); }
++
++    /** Experimental: invert the emulated Switch L button for the next game start. Off by default. */
++    static boolean invertL(Context c) { return of(c).getBoolean("invert_switch_l", false); }
++    static void invertL(Context c, boolean on) { of(c).edit().putBoolean("invert_switch_l", on).commit(); }
+ 
+     /** Button mapping (PadMap, DM_PAD_MAP): Settings' default ("" = none: the host's default), then each game's own (unset = Settings'; "" = none for this game) */
+     static String padMap(Context c) { return of(c).getString("pad_map", !BuildConfig.NX_PEANUTS_ID.isEmpty() ? PEANUTS_PAD_MAP : ""); }   // PEANUTS: a Peanuts build, whatever its -PnxAppId
+--- a/android/app/src/main/java/dev/nxnative/android/MainActivity.java
++++ b/android/app/src/main/java/dev/nxnative/android/MainActivity.java
+@@ -391,6 +391,9 @@
+         padMap.view.setOnClickListener(v -> PadMapUi.forDefault(this, () -> padMap.value(PadMapUi.label(this, null))));
+         padMap.value(PadMapUi.label(this, null));
+         ctl.addView(padMap.view);
++        ctl.addView(new Ui.Setting(this, "🎮", "Invert L — free camera (experimental)", null)
++                .toggle(this, Prefs.invertL(this), (b, on) -> Prefs.invertL(this, on))
++                .says("Switch L stays held until L1 is pressed; applies next game start", "Normal L button; applies next game start").view);
+         upsRow = new Ui.Setting(this, "🔍", "Upscaler", v -> pick("Upscaler", GameUpscaler.MODES, GameUpscaler.mode(this), w -> GameUpscaler.modeDefault(this, w))).chevron(this);
+         perf.addView(upsRow.view);
+         sharpRow = new Ui.Setting(this, "✨", "FSR sharpness", v -> pick("FSR sharpness", GameUpscaler.SHARP_NAMES, GameUpscaler.sharpIndex(GameUpscaler.sharp(this)),
+--- a/android/app/src/main/java/dev/nxnative/android/GameActivity.java
++++ b/android/app/src/main/java/dev/nxnative/android/GameActivity.java
+@@ -705,6 +705,7 @@
+         if (Prefs.ramSaver(this, id)) { env.add("DM_MEM_FILEBACK=1"); env.add("DM_MEM_FILEBACK_KINDS=shader,texture"); }   // Game settings › RAM saver: texture pools in a file in TMPDIR, the cache folder (vka_mem.c "File-backed pools"); lines of env.txt or the game's own come later and win
+         String padMap = Prefs.padMap(this, id);   // Button mapping (Game settings, Settings): wins over the label swap's A/B for the buttons it names
+         if (!padMap.isEmpty()) env.add("DM_PAD_MAP=" + padMap);
++        if (Prefs.invertL(this)) env.add("DM_PAD_INVERT_L=1"); // experimental global toggle, read at game start
+         env.add("DM_MOTION_SENS=" + Prefs.motionFactor(this, id));   // Game settings › Controls › Motion sensitivity (the phone's gyro, 50 % unless the player chose; env.txt lines come later and win)
+         if (Prefs.stretch(this, id)) env.add("DM_VK_STRETCH=1");   // Game settings › Display › Stretch to screen (or the in-game panel's Picture rows)
+         String aspect = Prefs.aspect(this, id), variant = aspect == null || Profile.of(id) == null ? null : Profile.of(id).aspectVariant(aspect);
