@@ -48,6 +48,7 @@
 
 - Analise os arquivos antes de modificá-los. Preserve as funcionalidades que já funcionam, salvo quando a alteração exigir mudanças nelas.
 - Crie versões separadas para novas melhorias. Valide o código antes de publicar e informe claramente as falhas e os testes pendentes.
+- A cada versão, atualize o nome do workflow exibido no GitHub Actions na branch principal, o título das novas execuções e a versão do APK. Preserve o workflow anterior em backup.
 - Use o GitHub Actions para compilar os APKs. Preserve os créditos dos desenvolvedores originais.
 
 ### Próxima melhoria
