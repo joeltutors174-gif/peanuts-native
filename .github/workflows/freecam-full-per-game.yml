@@ -326,7 +326,7 @@ jobs:
         run: |
           printf 'sdk.dir=%s\n' "$ANDROID_HOME" > local.properties
           chmod +x gradlew
-          ./gradlew --no-daemon -PnxPackStage="$RUNNER_TEMP/nxpacker/stage" -PnxApp=peanuts -PnxAppId=freecam -PnxLabel='Peanuts Pro FreeCam' -PnxGenericHost=true -PnxGames="$FULL_GAMES" apk
+          ./gradlew --no-daemon -PnxPackStage="$RUNNER_TEMP/nxpacker/stage" -PnxApp=peanuts -PnxAppId=freecam -PnxVersion=1.5 -PnxVersionCode=2 -PnxLabel='Peanuts Pro FreeCam' -PnxGenericHost=true -PnxGames="$FULL_GAMES" apk
 
       - name: Validate Full APK contents
         run: |
@@ -365,6 +365,9 @@ jobs:
 
           aapt2 = Path(os.environ["ANDROID_HOME"]) / "build-tools/36.0.0/aapt2"
           for apk in Path("android/app/out").glob("*.apk"):
+              badging = subprocess.check_output([aapt2, "dump", "badging", apk], text=True)
+              package = next(line for line in badging.splitlines() if line.startswith("package:"))
+              assert "versionName='1.5'" in package and "versionCode='2'" in package, package
               resources = subprocess.check_output([aapt2, "dump", "resources", apk], text=True)
               icon = re.search(r"resource (0x[0-9a-f]+) mipmap/freecam_launcher\b", resources)
               assert icon, f"Adaptive launcher icon missing from {apk}"
