@@ -1,4 +1,4 @@
-name: Peanuts Pro FreeCam Full - Catalog Aurora v1.4
+name: Peanuts Pro FreeCam Full - Catalog Aurora v1.5
 
 on:
   workflow_dispatch:
@@ -59,7 +59,7 @@ jobs:
           s = p.read_text()
 
           old = 'Ui.badge(this, 44), "Peanuts Native", Prefs.buildId(), trailing'
-          new = 'customLogo(), "Peanuts Pro FreeCam", "Full Catalog v1.4", trailing'
+          new = 'customLogo(), "Peanuts Pro FreeCam", "Full Catalog v1.5", trailing'
 
           assert old in s, "Home header not found"
           s = s.replace(old, new, 1)
@@ -165,10 +165,47 @@ jobs:
           p = root / "java/dev/peanuts/ui/AboutPage.java"
           s = p.read_text()
           p.write_text(s.replace('PUi.text(a, "Peanuts Native", 24','PUi.text(a, "Peanuts Pro FreeCam", 24'))
+          android = "{http://schemas.android.com/apk/res/android}"
+          ET.register_namespace("android", android[1:-1])
+          ET.register_namespace("aapt", "http://schemas.android.com/aapt")
+          foreground = ET.fromstring(logo)
+          foreground.remove(foreground[0])  # The adaptive icon supplies its own background.
+          paths = list(foreground)
+          group = ET.SubElement(foreground, "group", {
+              android + "pivotX": "60", android + "pivotY": "60",
+              android + "scaleX": "0.68", android + "scaleY": "0.68",
+          })
+          for path in paths:
+              foreground.remove(path)
+              group.append(path)
+          ET.ElementTree(foreground).write(res / "drawable/freecam_launcher_foreground.xml", encoding="utf-8")
+          for path in paths:
+              for child in list(path):
+                  path.remove(child)
+              for color in ("strokeColor", "fillColor"):
+                  attribute = android + color
+                  if attribute in path.attrib and path.attrib[attribute] != "#00000000":
+                      path.set(attribute, "#FFFFFFFF")
+          paths[0].set(android + "strokeColor", "#FFFFFFFF")
+          ET.ElementTree(foreground).write(res / "drawable/freecam_launcher_monochrome.xml", encoding="utf-8")
+
+          (res / "values/freecam_launcher_colors.xml").write_text(
+              '<resources><color name="freecam_launcher_background">#101014</color></resources>'
+          )
+          launcher = res / "mipmap-anydpi-v33/freecam_launcher.xml"
+          launcher.parent.mkdir(parents=True, exist_ok=True)
+          launcher.write_text("""<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@color/freecam_launcher_background"/>
+              <foreground android:drawable="@drawable/freecam_launcher_foreground"/>
+              <monochrome android:drawable="@drawable/freecam_launcher_monochrome"/>
+          </adaptive-icon>""")
+
           p = root / "AndroidManifest.xml"
           s = p.read_text()
-          assert 'android:icon="@mipmap/ic_launcher"' in s
-          s = s.replace('android:icon="@mipmap/ic_launcher"','android:icon="@drawable/freecam_pro_logo"').replace('android:roundIcon="@mipmap/ic_launcher_round"','android:roundIcon="@drawable/freecam_pro_logo"')
+          for attribute, old in (("icon", "ic_launcher"), ("roundIcon", "ic_launcher_round")):
+              original = f'android:{attribute}="@mipmap/{old}"'
+              assert s.count(original) == 1, original
+              s = s.replace(original, f'android:{attribute}="@mipmap/freecam_launcher"')
           p.write_text(s)
           # Keep status colors and third-party artwork intact. Replace explicit brand references only.
           for p in (root / "java").rglob("*.java"):
@@ -318,6 +355,28 @@ jobs:
                       print(f'{path.name}: {len(actual)} profiles, all seeds match official APK, all packer profiles present')
           PY
 
+      - name: Verify launcher icon in the compiled APK
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+
+          aapt2 = Path(os.environ["ANDROID_HOME"]) / "build-tools/36.0.0/aapt2"
+          for apk in Path("android/app/out").glob("*.apk"):
+              resources = subprocess.check_output([aapt2, "dump", "resources", apk], text=True)
+              icon = re.search(r"resource (0x[0-9a-f]+) mipmap/freecam_launcher\b", resources)
+              assert icon, f"Adaptive launcher icon missing from {apk}"
+              manifest = subprocess.check_output(
+                  [aapt2, "dump", "xmltree", "--file", "AndroidManifest.xml", apk], text=True
+              )
+              for attribute in ("icon", "roundIcon"):
+                  assert re.search(
+                      rf"(?:android|http://schemas\.android\.com/apk/res/android):{attribute}\(0x[0-9a-f]+\)=@{icon[1]}\b", manifest
+                  ), f"Manifest {attribute} does not reference the Aurora launcher icon in {apk}"
+          PY
+
       - name: Verify catalog is in compiled DEX
         run: |
           python3 - <<'PY'
@@ -328,7 +387,7 @@ jobs:
           for path in apks:
               with zipfile.ZipFile(path) as z:
                   dex = [z.read(n) for n in z.namelist() if n.startswith('classes') and n.endswith('.dex')]
-                  for needle in (b'Supported Games', b'supported_games', b'Search games or Title ID', b'Full Catalog v1.4'):
+                  for needle in (b'Supported Games', b'supported_games', b'Search games or Title ID', b'Full Catalog v1.5'):
                       assert any(needle in d for d in dex), f'Catalog missing in APK: {needle!r}'
                   print(f'{path.name}: catalog strings verified in compiled DEX')
           PY
@@ -378,6 +437,6 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: Peanuts-Pro-FreeCam-Full-Catalog-v1.4-Signed
+          name: Peanuts-Pro-FreeCam-Full-Catalog-v1.5-Signed
           path: signed-apk/*.apk
           if-no-files-found: error
