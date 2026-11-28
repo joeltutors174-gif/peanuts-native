@@ -1,0 +1,523 @@
+name: Peanuts Pro FreeCam Full - Catalog Aurora v1.8
+run-name: Peanuts Pro FreeCam Full - Catalog Aurora v1.8
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout Aurora
+        uses: actions/checkout@v4
+        with:
+          path: aurora-overrides
+          persist-credentials: false
+
+      - name: Stage the Aurora patches
+        run: |
+          cp aurora-overrides/freecam.patch "$RUNNER_TEMP/freecam.patch"
+          cp aurora-overrides/aurora-v18-localization.patch "$RUNNER_TEMP/aurora-v18-localization.patch"
+
+      - name: Checkout official Peanuts Native 0.1.9
+        uses: actions/checkout@v4
+        with:
+          repository: igawa6/peanuts-native
+          ref: 21d8242068b92d51f3ba070b62ce483049c0f91a
+          persist-credentials: false
+
+      - name: Apply Free Camera changes
+        run: |
+          git apply --check "$RUNNER_TEMP/freecam.patch"
+          git apply "$RUNNER_TEMP/freecam.patch"
+
+      - name: Keep startup diagnostics compatible with Smooth Experience
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("android/app/src/main/java/dev/nxnative/android/GameActivity.java")
+          source = path.read_text()
+
+          def edit(old, new):
+              global source
+              assert source.count(old) == 1, old
+              source = source.replace(old, new, 1)
+
+          edit("    private boolean drawing, failed;",
+               "    private boolean drawing, failed;\n    private final float[] startupFrameRate = new float[6];")
+          edit('            if (text.contains("[nvn] frame ")',
+               '            if (!drawing) drawing = Native.fps(startupFrameRate);\n            if (text.contains("[nvn] frame ")')
+          edit("            overlay.setVisibility(!drawing || failed || TouchControls.showLog(this) ? View.VISIBLE : View.GONE);",
+               "            overlay.setVisibility(!drawing || TouchControls.showLog(this) ? View.VISIBLE : View.GONE);")
+          path.write_text(source)
+          PY
+
+      - name: Move Free Camera preference to each game's Controls
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root = Path("android/app/src/main/java")
+          def edit(path, old, new):
+              p = root / path
+              s = p.read_text()
+              assert s.count(old) == 1, f"{path}: expected exactly one match"
+              p.write_text(s.replace(old,new,1))
+          edit("dev/nxnative/android/Prefs.java",
+              'static boolean invertL(Context c) { return of(c).getBoolean("invert_switch_l", false); }',
+              'static boolean invertL(Context c, String titleId) { return of(c).getBoolean(gameKey("invert_switch_l", titleId), false); }')
+          edit("dev/nxnative/android/Prefs.java",
+              'static void invertL(Context c, boolean on) { of(c).edit().putBoolean("invert_switch_l", on).commit(); }',
+              'static void invertL(Context c, String titleId, boolean on) { of(c).edit().putBoolean(gameKey("invert_switch_l", titleId), on).commit(); }')
+          edit("dev/nxnative/android/Prefs.java",
+              'for (String k : GAME_SETTINGS) e.remove(gameKey(k, titleId));',
+              'for (String k : GAME_SETTINGS) e.remove(gameKey(k, titleId));\n        e.remove(gameKey("invert_switch_l", titleId));')
+          edit("dev/nxnative/android/MainActivity.java", "        ctl.addView(new Ui.Setting(this, \"🎮\", \"Invert L — free camera (experimental)\", null)\n                .toggle(this, Prefs.invertL(this), (b, on) -> Prefs.invertL(this, on))\n                .says(\"Switch L stays held until L1 is pressed; applies next game start\", \"Normal L button; applies next game start\").view);\n", "")
+          edit("dev/nxnative/android/GameActivity.java",
+              'if (Prefs.invertL(this)) env.add("DM_PAD_INVERT_L=1"); // experimental global toggle, read at game start',
+              'if (Prefs.invertL(this, id)) env.add("DM_PAD_INVERT_L=1"); // per-title opt-in, read at game start')
+          edit("dev/nxnative/android/GameSettings.java", "        // ---- Controls ----", "        // ---- Controls ----\n        controls.add(new Ui.Setting(a, \"🎮\", \"Invert L — free camera (experimental)\", null)\n                .toggle(a, Prefs.invertL(a, id), (b, on) -> Prefs.invertL(a, id, on))\n                .says(\"Switch L stays held until L1 is pressed; applies next game start\", \"Normal L button; applies next game start\"));")
+          edit("dev/peanuts/ui/GameAreas.java",
+              '"Button mapping", "buttons", "Motion sensitivity", "aim"',
+              '"Button mapping", "buttons", "Invert L — free camera (experimental)", "controller", "Motion sensitivity", "aim"')
+          print("Free Camera now uses isolated per-title settings; legacy global value ignored")
+          PY
+
+      - name: Customize Peanuts Pro FreeCam
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path("android/app/src/main/java/dev/nxnative/android/MainActivity.java")
+          s = p.read_text()
+
+          old = 'Ui.badge(this, 44), "Peanuts Native", Prefs.buildId(), trailing'
+          new = 'customLogo(), "Peanuts Pro FreeCam", "Full Catalog v1.8", trailing'
+
+          assert old in s, "Home header not found"
+          s = s.replace(old, new, 1)
+
+          marker = "    private void buildHome("
+          assert marker in s
+
+          s = s.replace(marker, """
+              private View customLogo() {
+                  ImageView logo = new ImageView(this);
+                  logo.setImageResource(R.drawable.peanuts_pro_freecam_icon);
+                  logo.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                  logo.setLayoutParams(new LinearLayout.LayoutParams(
+                      Ui.dp(this, 44), Ui.dp(this, 44)));
+                  return logo;
+              }
+
+          """ + marker, 1)
+
+          p.write_text(s)
+          PY
+
+      - name: Add supported games catalog
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root = Path("android/app/src/main/java")
+          p = root / "dev/peanuts/ui/SettingsSections.java"
+          s = p.read_text()
+          marker = '            new Section("console",'
+          assert s.count(marker) == 1
+          p.write_text(s.replace(marker, '            new Section("supported_games", "Supported Games", "game", "Browse the game profiles included in this APK."),\n' + marker, 1))
+          p = root / "dev/peanuts/ui/SettingsPage.java"
+          s = p.read_text()
+          marker = '        if (s.key.equals("about")) { AboutPage.fill'
+          assert s.count(marker) == 1
+          p.write_text(s.replace(marker, '        if (s.key.equals("supported_games")) { dev.nxnative.android.SupportedGames.fill(a, col); return col; }\n' + marker, 1))
+          p = root / "dev/peanuts/ui/SettingsPage.java"
+          s = p.read_text()
+          marker = "        h.addView(PUi.badge(a, 44));"
+          assert s.count(marker) == 1
+          replacement = """        ImageView gear = new ImageView(a);
+                  gear.setImageResource(R.drawable.freecam_settings_gear);
+                  gear.setContentDescription("Settings");
+                  h.addView(gear, new LinearLayout.LayoutParams(PUi.dp(a, 44), PUi.dp(a, 44)));"""
+          p.write_text(s.replace(marker, replacement, 1))
+          drawable = root.parent / "res/drawable/freecam_settings_gear.xml"
+          drawable.write_text("""<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="44dp" android:height="44dp" android:viewportWidth="24" android:viewportHeight="24">
+              <path android:fillColor="#141317" android:pathData="M12,0 A12,12 0,1 0,12,24 A12,12 0,1 0,12,0"/>
+              <path android:fillColor="#FF193C" android:fillType="evenOdd" android:pathData="M10,3 L14,3 L14.7,5.7 L16.3,6.4 L18.8,5 L21,7.2 L19.6,9.7 L20.3,11.3 L23,12 L23,14 L20.3,14.7 L19.6,16.3 L21,18.8 L18.8,21 L16.3,19.6 L14.7,20.3 L14,23 L10,23 L9.3,20.3 L7.7,19.6 L5.2,21 L3,18.8 L4.4,16.3 L3.7,14.7 L1,14 L1,12 L3.7,11.3 L4.4,9.7 L3,7.2 L5.2,5 L7.7,6.4 L9.3,5.7 Z M12,9 A4,4 0,1 0,12,17 A4,4 0,1 0,12,9 Z"/>
+          </vector>""")
+          p = root / "dev/nxnative/android/SupportedGames.java"
+          assert not p.exists()
+          p.write_text("package dev.nxnative.android;\n\nimport android.app.Activity;\nimport android.graphics.Bitmap;\nimport android.graphics.BitmapFactory;\nimport android.widget.*;\nimport android.view.View;\nimport android.text.TextWatcher;\nimport android.text.Editable;\nimport java.io.File;\nimport java.util.*;\n\npublic final class SupportedGames {\n    private SupportedGames() {}\n    private static int dp(Activity a, int n) {\n        return Math.round(n * a.getResources().getDisplayMetrics().density);\n    }\n    private static TextView text(Activity a, String s, int size, int color) {\n        TextView t = new TextView(a);\n        t.setText(s); t.setTextSize(size); t.setTextColor(a.getColor(color));\n        return t;\n    }\n    public static void fill(Activity a, LinearLayout page) {\n        List<Profile> games = new ArrayList<>(Profile.all());\n        games.sort(Comparator.comparing(p -> p.name, String.CASE_INSENSITIVE_ORDER));\n        EditText search = new EditText(a);\n        search.setSingleLine(true);\n        search.setHint(\"Search games or Title ID\");\n        search.setTextColor(a.getColor(R.color.bn_text));\n        search.setHintTextColor(a.getColor(R.color.bn_text_2));\n        page.addView(search);\n        TextView count = text(a, \"\", 14, R.color.bn_text_2);\n        page.addView(count);\n        LinearLayout list = new LinearLayout(a);\n        list.setOrientation(LinearLayout.VERTICAL);\n        page.addView(list);\n        Runnable render = () -> {\n            String q = search.getText().toString().trim().toLowerCase(Locale.ROOT);\n            list.removeAllViews();\n            int visible = 0;\n            for (Profile p : games) {\n                if (!(p.name + \" \" + p.titleId).toLowerCase(Locale.ROOT).contains(q)) continue;\n                int index = visible++;\n                if (index % 3 == 0) {\n                    LinearLayout band = new LinearLayout(a);\n                    band.setOrientation(LinearLayout.HORIZONTAL);\n                    band.setWeightSum(3);\n                    band.setBaselineAligned(false);\n                    list.addView(band,new LinearLayout.LayoutParams(-1,-2));\n                }\n                LinearLayout band = (LinearLayout) list.getChildAt(list.getChildCount()-1);\n                LinearLayout card = new LinearLayout(a);\n                card.setOrientation(LinearLayout.VERTICAL);\n                card.setPadding(dp(a,6),dp(a,6),dp(a,6),dp(a,8));\n                android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();\n                bg.setColor(a.getColor(R.color.bn_card));\n                bg.setCornerRadius(dp(a,12));\n                card.setBackground(bg);\n                LinearLayout.LayoutParams cp = new LinearLayout.LayoutParams(0,-1,1);\n                cp.setMargins(dp(a,3),dp(a,4),dp(a,3),dp(a,4));\n                band.addView(card,cp);\n                Bitmap bitmap = null;\n                try (java.io.InputStream in = a.getAssets().open(\"game_covers/\" + p.titleId + \".webp\")) {\n                    bitmap = BitmapFactory.decodeStream(in);\n                } catch (java.io.IOException ignored) {}\n                if (bitmap == null) {\n                    File icon = new File(a.getFilesDir(),\"icons/\" + p.titleId + \".png\");\n                    if (icon.isFile()) bitmap = BitmapFactory.decodeFile(icon.getPath());\n                }\n                ImageView image = new ImageView(a);\n                image.setScaleType(ImageView.ScaleType.FIT_CENTER);\n                image.setContentDescription(p.name);\n                image.setAdjustViewBounds(false);\n                int width = a.getResources().getDisplayMetrics().widthPixels;\n                int coverHeight = Math.min(dp(a,220), Math.max(dp(a,90), (width-dp(a,80))/3*3/2));\n                if (bitmap != null) image.setImageBitmap(bitmap);\n                else image.setImageResource(android.R.drawable.ic_menu_gallery);\n                card.addView(image,new LinearLayout.LayoutParams(-1,coverHeight));\n                TextView title = text(a,p.name,13,R.color.bn_text);\n                title.setTypeface(null,android.graphics.Typeface.BOLD);\n                card.addView(title);\n                String versions = p.supportedShort();\n                card.addView(text(a,versions.isEmpty() ? \"Version not specified\" : versions,11,R.color.bn_text_2));\n                card.setFocusable(true);\n                card.setClickable(true);\n                card.setOnClickListener(v -> new android.app.AlertDialog.Builder(a)\n                    .setTitle(p.name).setMessage(\"Title ID: \" + p.titleId + \"\\\\nVersions: \" + versions + \"\\\\n\" + (\"bring-up\".equalsIgnoreCase(p.status) ? \"Experimental profile\" : \"Profile included\"))\n                    .setPositiveButton(\"OK\",null).show());\n            }\n            count.setText(visible + \" / \" + games.size() + \" games · Profiles do not guarantee flawless gameplay\");\n        };\n        search.addTextChangedListener(new TextWatcher() {\n            public void beforeTextChanged(CharSequence s,int start,int count,int after) {}\n            public void onTextChanged(CharSequence s,int start,int before,int count) { render.run(); }\n            public void afterTextChanged(Editable e) {}\n        });\n        render.run();\n    }\n}\n")
+          PY
+
+      - name: Apply Peanuts Pro Aurora branding
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          import xml.etree.ElementTree as ET
+          root = Path("android/app/src/main")
+          res = root / "res"
+          logo = """<vector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:aapt="http://schemas.android.com/aapt" android:width="108dp" android:height="108dp" android:viewportWidth="120" android:viewportHeight="120">
+            <path android:fillColor="#101014" android:pathData="M0,0 H120 V120 H0 Z"/>
+            <path android:pathData="M29,92 V28 H64 Q93,28 93,51 Q93,74 64,74 H47" android:strokeWidth="12" android:strokeLineCap="round" android:strokeLineJoin="round" android:fillColor="#00000000">
+              <aapt:attr name="android:strokeColor"><gradient android:type="linear" android:startX="20" android:startY="20" android:endX="100" android:endY="100">
+                <item android:offset="0" android:color="#00DFFF"/>
+                <item android:offset="0.5" android:color="#8155FF"/>
+                <item android:offset="1" android:color="#FF367D"/>
+              </gradient></aapt:attr>
+            </path>
+            <path android:pathData="M49,42 V60 M40,51 H58" android:strokeColor="#FFFFFF" android:strokeWidth="5" android:strokeLineCap="round"/>
+            <path android:fillColor="#32FF91" android:pathData="M76,47 A4,4 0,1 0,76,55 A4,4 0,1 0,76,47"/>
+          </vector>"""
+          ET.fromstring(logo)
+          (res / "drawable/freecam_pro_logo.xml").write_text(logo)
+          colors = {"ic_launcher_background":"#FF101014","bn_bg":"#FF15151C","bn_card":"#FF22232E","bn_card_stroke":"#FF393B49","bn_tint":"#FF303044","bn_banana":"#FFA69AF2","bn_banana_deep":"#FF8275CB","bn_on_banana":"#FF191727","bn_text":"#FFF1EFF8","bn_text_2":"#FFB4B2C3","bn_accent":"#FFB2A6F7"}
+          p = res / "values/colors.xml"
+          s = p.read_text()
+          for key,value in colors.items():
+              pattern = r'(<color name="' + key + r'">)[^<]+(</color>)'
+              s,n = re.subn(pattern,lambda m:m[1]+value+m[2],s)
+              assert n == 1,key
+          p.write_text(s.replace("Gamer Red & Black","Aurora Graphite & Lavender"))
+          for name in ("dev/nxnative/android/Ui.java","dev/peanuts/ui/PUi.java"):
+              p = root / "java" / name
+              s = p.read_text()
+              old = "v.setImageDrawable(new android.graphics.drawable.InsetDrawable(c.getDrawable(R.drawable.ic_banana_happy), -0.16f));"
+              assert old in s,name
+              s = s.replace(old,"v.setImageResource(R.drawable.freecam_pro_logo);",1)
+              s = s.replace("g.setColor(0xFF1E5B3A);","g.setColor(0xFF101014);",1)
+              p.write_text(s)
+          p = root / "java/dev/nxnative/android/MainActivity.java"
+          s = p.read_text()
+          assert "R.drawable.peanuts_pro_freecam_icon" in s
+          p.write_text(s.replace("R.drawable.peanuts_pro_freecam_icon","R.drawable.freecam_pro_logo"))
+          p = root / "java/dev/peanuts/ui/SettingsPage.java"
+          s = p.read_text()
+          assert "R.drawable.freecam_settings_gear" in s
+          p.write_text(s.replace("R.drawable.freecam_settings_gear","R.drawable.freecam_pro_logo"))
+          p = root / "java/dev/peanuts/ui/AboutPage.java"
+          s = p.read_text()
+          p.write_text(s.replace('PUi.text(a, "Peanuts Native", 24','PUi.text(a, "Peanuts Pro FreeCam", 24'))
+          android = "{http://schemas.android.com/apk/res/android}"
+          ET.register_namespace("android", android[1:-1])
+          ET.register_namespace("aapt", "http://schemas.android.com/aapt")
+          foreground = ET.fromstring(logo)
+          foreground.remove(foreground[0])  # The adaptive icon supplies its own background.
+          paths = list(foreground)
+          group = ET.SubElement(foreground, "group", {
+              android + "pivotX": "60", android + "pivotY": "60",
+              android + "scaleX": "0.68", android + "scaleY": "0.68",
+          })
+          for path in paths:
+              foreground.remove(path)
+              group.append(path)
+          ET.ElementTree(foreground).write(res / "drawable/freecam_launcher_foreground.xml", encoding="utf-8")
+          for path in paths:
+              for child in list(path):
+                  path.remove(child)
+              for color in ("strokeColor", "fillColor"):
+                  attribute = android + color
+                  if attribute in path.attrib and path.attrib[attribute] != "#00000000":
+                      path.set(attribute, "#FFFFFFFF")
+          paths[0].set(android + "strokeColor", "#FFFFFFFF")
+          ET.ElementTree(foreground).write(res / "drawable/freecam_launcher_monochrome.xml", encoding="utf-8")
+
+          (res / "values/freecam_launcher_colors.xml").write_text(
+              '<resources><color name="freecam_launcher_background">#101014</color></resources>'
+          )
+          icon = """<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@color/freecam_launcher_background"/>
+              <foreground android:drawable="@drawable/freecam_launcher_foreground"/>
+          </adaptive-icon>"""
+          for api in (26, 33):
+              launcher = res / f"mipmap-anydpi-v{api}/freecam_launcher.xml"
+              launcher.parent.mkdir(parents=True, exist_ok=True)
+              monochrome = '<monochrome android:drawable="@drawable/freecam_launcher_monochrome"/>'
+              launcher.write_text(icon if api == 26 else icon.replace("</adaptive-icon>", monochrome + "\n</adaptive-icon>"))
+
+          p = root / "AndroidManifest.xml"
+          s = p.read_text()
+          for attribute, old in (("icon", "ic_launcher"), ("roundIcon", "ic_launcher_round")):
+              original = f'android:{attribute}="@mipmap/{old}"'
+              assert s.count(original) == 1, original
+              s = s.replace(original, f'android:{attribute}="@mipmap/freecam_launcher"')
+          p.write_text(s)
+          # Keep status colors and third-party artwork intact. Replace explicit brand references only.
+          for p in (root / "java").rglob("*.java"):
+              s = p.read_text()
+              new = s.replace("R.drawable.peanuts_pro_freecam_icon","R.drawable.freecam_pro_logo")
+              if new != s: p.write_text(new)
+          print("Aurora logo and palette applied; warning and error colors retained")
+          PY
+
+      - name: Add Portuguese and English UI and catalog release history
+        run: |
+          git apply --check "$RUNNER_TEMP/aurora-v18-localization.patch"
+          git apply "$RUNNER_TEMP/aurora-v18-localization.patch"
+
+      - name: Restore official 0.1.9 profiles and prewarm inputs
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 4 --retry-delay 5 \
+            'https://github.com/igawa6/peanuts-native/releases/download/v0.1.9-1/PeanutsNative-0.1.9.apk' \
+            -o "$RUNNER_TEMP/peanuts-original.apk"
+          echo "8808457c40f87c213ac5ccdd3afd7c4080231df649910063d615e58ea42d8ff5  $RUNNER_TEMP/peanuts-original.apk" | sha256sum -c -
+          curl --fail --location --retry 4 --retry-delay 5 \
+            'https://github.com/igawa6/peanuts-native/releases/download/v0.1.8-1/PeanutsNative-0.1.8.apk' \
+            -o "$RUNNER_TEMP/peanuts-previous.apk"
+          echo "e8f1afd54b785e48bbd3826e73837051d2587e71a079cf5932939d8f60b2b679  $RUNNER_TEMP/peanuts-previous.apk" | sha256sum -c -
+          python3 - <<'PY'
+          import hashlib, os, re, zipfile
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP'])
+          seeds = root / 'official-seeds'
+          seeds.mkdir(exist_ok=True)
+          expected = dict(line.split() for line in Path('peanuts/prewarm-sha256.tsv').read_text().splitlines() if line.strip())
+          def profiles(apk):
+              return [m.group(1) for name in apk.namelist() if (m := re.fullmatch(r'assets/profiles/([0-9A-F]{16})\.profile\.bin', name))]
+
+          with zipfile.ZipFile(root / 'peanuts-previous.apk') as previous:
+              previous_ids = set(profiles(previous))
+          assert len(previous_ids) == 76, f'Expected 76 previous profiles, got {len(previous_ids)}'
+
+          with zipfile.ZipFile(root / 'peanuts-original.apk') as apk:
+              ids = sorted(profiles(apk))
+              assert len(ids) == len(set(ids)) == 87, f'Expected 87 profiles, got {len(ids)}'
+              assert previous_ids.issubset(ids), f'Profiles lost since 0.1.8: {previous_ids - set(ids)}'
+              official_ids = next(
+                  line.partition('=')[2].split(',')
+                  for line in Path('android/app/gradle.properties').read_text().splitlines()
+                  if line.startswith('nxGames=')
+              )
+              assert set(ids) == set(official_ids), 'Official source and APK profile lists differ'
+              from datetime import date
+              history = [
+                  line.split('\t')
+                  for line in Path('android/app/src/main/assets/aurora_catalog_releases.tsv').read_text().splitlines()
+              ]
+              assert len(history) == len(ids) and {row[0] for row in history} == set(ids), 'Incomplete catalog history'
+              for title, version, day, status in history:
+                  assert version and date.fromisoformat(day)
+                  assert status == ('baseline' if title in previous_ids else 'added'), title
+              missing = [g for g in ids if not Path(f'dm/games/{g}/game.tsv').is_file()]
+              assert not missing, f'Missing source profiles: {missing}'
+              for g in ids:
+                  data = apk.read(f'assets/profiles/{g}.seed')
+                  if g in expected:
+                      assert hashlib.sha256(data).hexdigest() == expected[g], f'Seed mismatch for {g}'
+                  (seeds / f'{g}.seed').write_bytes(data)
+              # Keep the original FreeCam game first for the default self-test.
+              ids.remove('01002DA013484000')
+              ids.insert(0, '01002DA013484000')
+          with open(os.environ['GITHUB_ENV'], 'a') as out:
+              out.write(f'PN_PREWARM_SEEDS={seeds}\n')
+              out.write('FULL_GAMES=' + ','.join(ids) + '\n')
+          print(f'Validated {len(ids)} source profiles and official release seeds')
+          PY
+
+      - name: Prepare offline game artwork
+        run: |
+          python3 -m pip install --user --break-system-packages Pillow
+          python3 - <<'PY'
+          import os, json, io, urllib.request, concurrent.futures
+          from pathlib import Path
+          from PIL import Image
+          ids = set(os.environ['FULL_GAMES'].split(','))
+          dest = Path('android/app/src/main/assets/game_covers')
+          dest.mkdir(parents=True, exist_ok=True)
+          def fetch(url):
+              req = urllib.request.Request(url, headers={'User-Agent':'PeanutsFreeCamCatalog/1.2'})
+              with urllib.request.urlopen(req, timeout=25) as response:
+                  return response.read()
+          records = {}
+          for region in ('US.en','GB.en','JP.ja'):
+              try:
+                  data = json.loads(fetch('https://raw.githubusercontent.com/blawar/titledb/master/' + region + '.json'))
+                  for item in data.values():
+                      if not isinstance(item,dict): continue
+                      tid = str(item.get('id') or '').upper()
+                      if tid in ids and tid not in records:
+                          url = item.get('frontBoxArt') or item.get('iconUrl') or item.get('bannerUrl')
+                          if isinstance(url,str) and url.startswith('https://'): records[tid] = url
+              except Exception as e:
+                  print('Metadata unavailable:', region, str(e))
+          def save(pair):
+              tid,url = pair
+              try:
+                  with Image.open(io.BytesIO(fetch(url))) as im:
+                      im.thumbnail((320,480))
+                      im.convert('RGB').save(dest / (tid+'.webp'),'WEBP',quality=82)
+                  return tid
+              except Exception as e:
+                  print('Artwork unavailable:',tid,str(e))
+          with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+              saved = set(x for x in pool.map(save,records.items()) if x)
+          print(f'Offline artwork: {len(saved)}/{len(ids)}')
+          print('Missing artwork:', ', '.join(sorted(ids-saved)))
+          (dest/'coverage.txt').write_text(f'{len(saved)}/{len(ids)}\\n' + '\\n'.join(sorted(ids-saved)))
+          PY
+
+      - name: Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Android SDK
+        uses: android-actions/setup-android@v4.0.3
+
+      - name: Install Android SDK components
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;28.2.13676358' 'cmake;3.22.1'
+
+      - name: Setup Dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zsh ninja-build cmake clang curl build-essential pkg-config
+
+      - name: Build NX Pack Stage
+        run: |
+          export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.2.13676358"
+          zsh peanuts/scripts/ondevice-stage.sh "$RUNNER_TEMP/nxpacker"
+
+      - name: Compile experimental APK
+        working-directory: android/app
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx4g
+        run: |
+          printf 'sdk.dir=%s\n' "$ANDROID_HOME" > local.properties
+          chmod +x gradlew
+          ./gradlew --no-daemon -PnxPackStage="$RUNNER_TEMP/nxpacker/stage" -PnxApp=peanuts -PnxAppId=freecam -PnxVersion=1.8 -PnxVersionCode=5 -PnxLabel='Peanuts Pro FreeCam' -PnxGenericHost=true -PnxGames="$FULL_GAMES" apk
+
+      - name: Validate Full APK contents
+        run: |
+          python3 - <<'PY'
+          import os, zipfile
+          from pathlib import Path
+          ids = set(os.environ['FULL_GAMES'].split(','))
+          apks = list(Path('android/app/out').glob('*.apk'))
+          assert apks, 'No APK produced'
+          original = Path(os.environ['RUNNER_TEMP']) / 'peanuts-original.apk'
+          with zipfile.ZipFile(original) as base:
+              for path in apks:
+                  with zipfile.ZipFile(path) as apk:
+                      names = set(apk.namelist())
+                      history = Path('android/app/src/main/assets/aurora_catalog_releases.tsv')
+                      assert apk.read('assets/aurora_catalog_releases.tsv') == history.read_bytes(), 'Catalog history missing or changed'
+                      actual = {n.split('/')[-1].split('.')[0] for n in names if n.startswith('assets/profiles/') and n.endswith('.profile.bin')}
+                      assert actual == ids, f'Profile mismatch: {ids - actual}'
+                      for g in ids:
+                          for suffix in ('profile.bin', 'pairs', 'seed'):
+                              name = f'assets/profiles/{g}.{suffix}'
+                              assert name in names, f'Missing {name}'
+                              if suffix == 'seed':
+                                  assert apk.read(name) == base.read(name), f'Seed differs from official: {g}'
+                      with zipfile.ZipFile(__import__('io').BytesIO(apk.read('assets/pack/tools.zip'))) as tools_zip:
+                          for g in ids:
+                              assert f'dm/games/{g}/game.tsv' in tools_zip.namelist(), f'Missing packer profile {g}'
+                      print(f'{path.name}: {len(actual)} profiles, all seeds match official APK, all packer profiles present')
+          PY
+
+      - name: Verify launcher icon in the compiled APK
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          import re
+          import subprocess
+
+          aapt2 = Path(os.environ["ANDROID_HOME"]) / "build-tools/36.0.0/aapt2"
+          for apk in Path("android/app/out").glob("*.apk"):
+              badging = subprocess.check_output([aapt2, "dump", "badging", apk], text=True)
+              package = next(line for line in badging.splitlines() if line.startswith("package:"))
+              assert "name='dev.nxnative.android.freecam'" in package, package
+              assert "versionName='1.8'" in package and "versionCode='5'" in package, package
+              resources = subprocess.check_output([aapt2, "dump", "resources", apk], text=True)
+              assert "string/aurora_language" in resources and "array/aurora_labels" in resources
+              configurations = subprocess.check_output([aapt2, "dump", "configurations", apk], text=True)
+              assert "pt-rBR" in configurations or "b+pt+BR" in configurations, configurations
+              icon = re.search(r"resource (0x[0-9a-f]+) mipmap/freecam_launcher\b", resources)
+              assert icon, f"Adaptive launcher icon missing from {apk}"
+              manifest = subprocess.check_output(
+                  [aapt2, "dump", "xmltree", "--file", "AndroidManifest.xml", apk], text=True
+              )
+              for attribute in ("icon", "roundIcon"):
+                  assert re.search(
+                      rf"(?:android|http://schemas\.android\.com/apk/res/android):{attribute}\(0x[0-9a-f]+\)=@{icon[1]}\b", manifest
+                  ), f"Manifest {attribute} does not reference the Aurora launcher icon in {apk}"
+          PY
+
+      - name: Verify catalog is in compiled DEX
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          apks = list(Path('android/app/out').glob('*.apk'))
+          assert apks
+          for path in apks:
+              with zipfile.ZipFile(path) as z:
+                  dex = [z.read(n) for n in z.namelist() if n.startswith('classes') and n.endswith('.dex')]
+                  for needle in (b'Supported Games', b'supported_games', b'aurora_catalog_releases.tsv', b'Language', b'Full Catalog v1.8'):
+                      assert any(needle in d for d in dex), f'Catalog missing in APK: {needle!r}'
+                  print(f'{path.name}: catalog strings verified in compiled DEX')
+          PY
+
+      - name: Sign APK permanently
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          umask 077
+
+          KEYSTORE="$RUNNER_TEMP/peanuts-freecam.p12"
+          trap 'rm -f "$KEYSTORE" "$RUNNER_TEMP/aligned.apk"' EXIT
+
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE"
+
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/36.0.0"
+
+          mkdir -p signed-apk
+
+          shopt -s nullglob
+          apks=(android/app/out/*.apk)
+          test "${#apks[@]}" -gt 0
+
+          for apk in "${apks[@]}"; do
+            NAME=$(basename "$apk")
+
+            "$BUILD_TOOLS/zipalign" -P 16 -f 4 \
+              "$apk" "$RUNNER_TEMP/aligned.apk"
+
+            "$BUILD_TOOLS/apksigner" sign \
+              --ks "$KEYSTORE" \
+              --ks-type PKCS12 \
+              --ks-key-alias peanuts \
+              --ks-pass env:KEYSTORE_PASSWORD \
+              --key-pass env:KEY_PASSWORD \
+              --out "signed-apk/$NAME" \
+              "$RUNNER_TEMP/aligned.apk"
+
+            "$BUILD_TOOLS/apksigner" verify \
+              --verbose --print-certs "signed-apk/$NAME"
+          done
+
+      - name: Upload APK
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Peanuts-Pro-FreeCam-Full-Catalog-v1.8-Signed
+          path: signed-apk/*.apk
+          if-no-files-found: error
