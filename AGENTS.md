@@ -40,7 +40,7 @@
 - Repositório: `joeltutors174-gif/peanuts-native`. Versão estável de referência: Aurora v1.4. Preserve as versões anteriores como backup.
 - Preserve o identificador do aplicativo e a assinatura digital permanente. Nunca exponha as chaves de assinatura.
 - Preserve os saves, as configurações e os jogos importados.
-- Preserve os 76 perfis oficiais anteriores e o catálogo pesquisável em três colunas com capas offline.
+- Preserve os 76 perfis anteriores. Mantenha busca, três colunas e capas offline. Registre versão e data de inclusão dos novos perfis.
 - Mantenha a câmera livre configurável individualmente por jogo.
 - Preserve o tema grafite e lavanda Aurora. Use a logo P com degradê azul, roxo e rosa.
 
@@ -53,4 +53,4 @@
 
 ### Versões Aurora
 
-- Aurora v1.5 ajustou o ícone externo em 1:1. Aurora v1.6 corrigiu o diagnóstico na tela. Aurora v1.7 usa a base oficial 0.1.9 com 87 perfis.
+- Aurora v1.7 incorporou a base 0.1.9 com 87 perfis. A v1.8 adicionou idiomas e histórico ao catálogo.
