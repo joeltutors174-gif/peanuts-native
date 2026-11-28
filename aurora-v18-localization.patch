@@ -1,0 +1,1379 @@
+diff --git a/android/app/src/main/assets/aurora_catalog_releases.tsv b/android/app/src/main/assets/aurora_catalog_releases.tsv
+new file mode 100644
+index 0000000..15d8137
+--- /dev/null
++++ b/android/app/src/main/assets/aurora_catalog_releases.tsv
+@@ -0,0 +1,87 @@
++0100000000010000	Peanuts 0.1.8	2026-11-24	baseline
++0100000011D90000	Peanuts 0.1.8	2026-11-24	baseline
++010003F003A34000	Peanuts 0.1.8	2026-11-24	baseline
++01000EA014150000	Aurora v1.7	2026-11-28	added
++010015100B514000	Peanuts 0.1.8	2026-11-24	baseline
++0100152000022000	Peanuts 0.1.8	2026-11-24	baseline
++0100187003A36000	Peanuts 0.1.8	2026-11-24	baseline
++010018E011D92000	Peanuts 0.1.8	2026-11-24	baseline
++01001B300B9BE000	Peanuts 0.1.8	2026-11-24	baseline
++01001BB01E8E2000	Aurora v1.7	2026-11-28	added
++01001F5010DFA000	Peanuts 0.1.8	2026-11-24	baseline
++010028600EBDA000	Peanuts 0.1.8	2026-11-24	baseline
++01002B00111A2000	Peanuts 0.1.8	2026-11-24	baseline
++01002C9022770000	Peanuts 0.1.8	2026-11-24	baseline
++01002DA013484000	Peanuts 0.1.8	2026-11-24	baseline
++0100300012F2A000	Peanuts 0.1.8	2026-11-24	baseline
++010035F022078000	Peanuts 0.1.8	2026-11-24	baseline
++01003D100E9C6000	Peanuts 0.1.8	2026-11-24	baseline
++01003D200BAA2000	Peanuts 0.1.8	2026-11-24	baseline
++01003E601E324000	Peanuts 0.1.8	2026-11-24	baseline
++01003FC01670C000	Peanuts 0.1.8	2026-11-24	baseline
++0100453019AA8000	Peanuts 0.1.8	2026-11-24	baseline
++01004BC0166CC000	Aurora v1.7	2026-11-28	added
++01004D300C5AE000	Peanuts 0.1.8	2026-11-24	baseline
++010051C0134F8000	Peanuts 0.1.8	2026-11-24	baseline
++010051F0207B2000	Peanuts 0.1.8	2026-11-24	baseline
++01005270232F2000	Peanuts 0.1.8	2026-11-24	baseline
++010055D009F78000	Peanuts 0.1.8	2026-11-24	baseline
++0100563010E0C000	Peanuts 0.1.8	2026-11-24	baseline
++010057D006492000	Aurora v1.7	2026-11-28	added
++01005CA01580E000	Peanuts 0.1.8	2026-11-24	baseline
++01006000040C2000	Peanuts 0.1.8	2026-11-24	baseline
++0100606026F12000	Peanuts 0.1.8	2026-11-24	baseline
++010062E01FE0C000	Peanuts 0.1.8	2026-11-24	baseline
++010065301A2E0000	Peanuts 0.1.8	2026-11-24	baseline
++010069401ADB8000	Peanuts 0.1.8	2026-11-24	baseline
++01006AE02236C000	Peanuts 0.1.8	2026-11-24	baseline
++01006B601380E000	Peanuts 0.1.8	2026-11-24	baseline
++01006BB00C6F0000	Peanuts 0.1.8	2026-11-24	baseline
++01006F600FFC8000	Peanuts 0.1.8	2026-11-24	baseline
++01006F8002326000	Peanuts 0.1.8	2026-11-24	baseline
++01007300020FA000	Peanuts 0.1.8	2026-11-24	baseline
++0100739018020000	Peanuts 0.1.8	2026-11-24	baseline
++010075101EF84000	Peanuts 0.1.8	2026-11-24	baseline
++0100755017EE0000	Peanuts 0.1.8	2026-11-24	baseline
++01007A2027548000	Peanuts 0.1.8	2026-11-24	baseline
++01007EF00011E000	Peanuts 0.1.8	2026-11-24	baseline
++010085500130A000	Peanuts 0.1.8	2026-11-24	baseline
++010089B01AB44000	Peanuts 0.1.8	2026-11-24	baseline
++01008BC024FDE000	Peanuts 0.1.8	2026-11-24	baseline
++01008C0016544000	Aurora v1.7	2026-11-28	added
++01008CF01BAAC000	Peanuts 0.1.8	2026-11-24	baseline
++01008DB008C2C000	Peanuts 0.1.8	2026-11-24	baseline
++01008F6008C5E000	Peanuts 0.1.8	2026-11-24	baseline
++01008FE00E2F6000	Aurora v1.7	2026-11-28	added
++010093801237C000	Peanuts 0.1.8	2026-11-24	baseline
++010093C0215B4000	Aurora v1.7	2026-11-28	added
++01009720213B0000	Peanuts 0.1.8	2026-11-24	baseline
++010097F018538000	Peanuts 0.1.8	2026-11-24	baseline
++010099A00BC1E000	Peanuts 0.1.8	2026-11-24	baseline
++01009BF0072D4000	Peanuts 0.1.8	2026-11-24	baseline
++0100A0F00DA68000	Peanuts 0.1.8	2026-11-24	baseline
++0100A3D008C5C000	Peanuts 0.1.8	2026-11-24	baseline
++0100A6301214E000	Peanuts 0.1.8	2026-11-24	baseline
++0100A7C01B792000	Peanuts 0.1.8	2026-11-24	baseline
++0100A9D01C446000	Aurora v1.7	2026-11-28	added
++0100ABF008968000	Peanuts 0.1.8	2026-11-24	baseline
++0100ACD0163D0000	Aurora v1.7	2026-11-28	added
++0100AD80208A8000	Peanuts 0.1.8	2026-11-24	baseline
++0100B63016916000	Peanuts 0.1.8	2026-11-24	baseline
++0100B8E016F76000	Peanuts 0.1.8	2026-11-24	baseline
++0100BA4026E94000	Peanuts 0.1.8	2026-11-24	baseline
++0100BC0018138000	Peanuts 0.1.8	2026-11-24	baseline
++0100C2901153C000	Peanuts 0.1.8	2026-11-24	baseline
++0100C49025D3E000	Peanuts 0.1.8	2026-11-24	baseline
++0100C5000F294000	Aurora v1.7	2026-11-28	added
++0100C510166F0000	Peanuts 0.1.8	2026-11-24	baseline
++0100DAE01E4C8000	Peanuts 0.1.8	2026-11-24	baseline
++0100DCA0064A6000	Peanuts 0.1.8	2026-11-24	baseline
++0100DE501433A000	Peanuts 0.1.8	2026-11-24	baseline
++0100EB100AB42000	Aurora v1.7	2026-11-28	added
++0100F2C0115B6000	Peanuts 0.1.8	2026-11-24	baseline
++0100F43008C44000	Peanuts 0.1.8	2026-11-24	baseline
++0100F4300BF2C000	Peanuts 0.1.8	2026-11-24	baseline
++0100F7E00C70E000	Peanuts 0.1.8	2026-11-24	baseline
++0100F9D023176000	Peanuts 0.1.8	2026-11-24	baseline
++0100F9F00C696000	Peanuts 0.1.8	2026-11-24	baseline
+diff --git a/android/app/src/main/java/dev/nxnative/android/AuroraText.java b/android/app/src/main/java/dev/nxnative/android/AuroraText.java
+new file mode 100644
+index 0000000..342b035
+--- /dev/null
++++ b/android/app/src/main/java/dev/nxnative/android/AuroraText.java
+@@ -0,0 +1,100 @@
++package dev.nxnative.android;
++
++import android.app.Activity;
++import android.content.Context;
++import android.content.SharedPreferences;
++import android.content.res.Configuration;
++import android.content.res.Resources;
++import android.os.LocaleList;
++import android.text.method.TransformationMethod;
++import android.view.View;
++import android.widget.TextView;
++
++import java.util.HashMap;
++import java.util.Locale;
++import java.util.Map;
++
++/** The Aurora UI language. Existing setting keys and action labels stay canonical. */
++public final class AuroraText {
++    private static final Locale BRAZIL = Locale.forLanguageTag("pt-BR");
++    private static final String[] OPTIONS = {"", "pt-BR", "en"};
++    private static Map<String, String> portuguese;
++
++    private AuroraText() {}
++
++    private static SharedPreferences preferences(Context c) {
++        return c.getSharedPreferences("aurora_ui", Context.MODE_PRIVATE);
++    }
++
++    private static int choice(Context c) {
++        String saved = preferences(c).getString("language", "");
++        for (int i = 1; i < OPTIONS.length; i++) if (OPTIONS[i].equals(saved)) return i;
++        return 0;
++    }
++
++    static boolean isPortuguese(Context c) {
++        int choice = choice(c);
++        if (choice != 0) return choice == 1;
++        LocaleList locales = Resources.getSystem().getConfiguration().getLocales();
++        return !locales.isEmpty() && "pt".equals(locales.get(0).getLanguage());
++    }
++
++    private static Resources resources(Context c, Locale locale) {
++        Configuration config = new Configuration(c.getResources().getConfiguration());
++        config.setLocales(new LocaleList(locale));
++        return c.createConfigurationContext(config).getResources();
++    }
++
++    static String string(Context c, int id, Object... args) {
++        return resources(c, isPortuguese(c) ? BRAZIL : Locale.ENGLISH).getString(id, args);
++    }
++
++    private static synchronized Map<String, String> translations(Context c) {
++        if (portuguese == null) {
++            String[] keys = resources(c, Locale.ENGLISH).getStringArray(R.array.aurora_labels);
++            String[] values = resources(c, BRAZIL).getStringArray(R.array.aurora_labels);
++            portuguese = new HashMap<>();
++            for (int i = 0; i < keys.length; i++) portuguese.put(keys[i], values[i]);
++        }
++        return portuguese;
++    }
++
++    public static String label(Context c, String english) {
++        return isPortuguese(c) ? translations(c).getOrDefault(english, english) : english;
++    }
++
++    /** Preserve getText() for code that locates rows, headings and actions by their original names. */
++    public static void showTranslated(TextView view, boolean uppercase) {
++        view.setTransformationMethod(new TransformationMethod() {
++            @Override public CharSequence getTransformation(CharSequence text, View target) {
++                if (text == null) return null;
++                String original = text.toString();
++                String visible = label(target.getContext(), original);
++                if (!uppercase && original.equals(visible)) return text;
++                return uppercase ? visible.toUpperCase(isPortuguese(target.getContext()) ? BRAZIL : Locale.ENGLISH) : visible;
++            }
++            @Override public void onFocusChanged(View v, CharSequence s, boolean focused, int direction, android.graphics.Rect previous) {}
++        });
++    }
++
++    public static void translateLabel(TextView view) { showTranslated(view, false); }
++
++    static String selection(Context c) { return languageNames(c)[choice(c)]; }
++
++    private static String[] languageNames(Context c) {
++        return new String[] {string(c, R.string.aurora_language_system), "Português (Brasil)", "English"};
++    }
++
++    static void pick(Activity a, Runnable refresh) {
++        new PadFocus.Builder(a).setTitle(string(a, R.string.aurora_language))
++                .setSingleChoiceItems(languageNames(a), choice(a), (dialog, position) -> {
++                    if (position != choice(a)) {
++                        preferences(a).edit().putString("language", OPTIONS[position]).apply();
++                        dialog.dismiss();
++                        refresh.run();
++                    } else dialog.dismiss();
++                })
++                .setNegativeButton(label(a, "Cancel"), null)
++                .show();
++    }
++}
+diff --git a/android/app/src/main/java/dev/nxnative/android/CrtFilter.java b/android/app/src/main/java/dev/nxnative/android/CrtFilter.java
+index 47706c1..ea5085d 100644
+--- a/android/app/src/main/java/dev/nxnative/android/CrtFilter.java
++++ b/android/app/src/main/java/dev/nxnative/android/CrtFilter.java
+@@ -50,7 +50,7 @@ final class CrtFilter {
+     /** The in-game panel's rows (Display tab, under its "CRT filter" heading): one choice, applied at once and kept for this game */
+     static void rows(Context c, LinearLayout box, String titleId) {
+         RadioGroup g = new RadioGroup(c);
+-        for (int i = 0; i < MODES.length; i++) { RadioButton b = new RadioButton(c); b.setText(MODES[i]); b.setId(3400 + i); g.addView(b); if (i == mode(c, titleId)) b.setChecked(true); }
++        for (int i = 0; i < MODES.length; i++) { RadioButton b = new RadioButton(c); b.setText(AuroraText.label(c, MODES[i])); b.setId(3400 + i); g.addView(b); if (i == mode(c, titleId)) b.setChecked(true); }
+         g.setOnCheckedChangeListener((gr, id) -> mode(c, titleId, id - 3400));
+         box.addView(g);
+     }
+diff --git a/android/app/src/main/java/dev/nxnative/android/GameUpscaler.java b/android/app/src/main/java/dev/nxnative/android/GameUpscaler.java
+index c660ed1..24fa8c0 100644
+--- a/android/app/src/main/java/dev/nxnative/android/GameUpscaler.java
++++ b/android/app/src/main/java/dev/nxnative/android/GameUpscaler.java
+@@ -120,13 +120,13 @@ final class GameUpscaler {
+     static void rows(Context c, String titleId, LinearLayout box) {
+         if (Prefs.dlssGame(titleId)) { dlssRows(c, titleId, box); return; }
+         TextView head = new TextView(c);
+-        head.setText("Upscaler");
++        head.setText(AuroraText.label(c, "Upscaler"));
+         head.setPadding(0, 24, 0, 0);
+         box.addView(head);
+         RadioGroup g = new RadioGroup(c);
+-        for (int i = 0; i < MODES.length; i++) { RadioButton b = new RadioButton(c); b.setText(MODES[i]); b.setId(3100 + i); g.addView(b); if (i == mode(c, titleId)) b.setChecked(true); }
++        for (int i = 0; i < MODES.length; i++) { RadioButton b = new RadioButton(c); b.setText(AuroraText.label(c, MODES[i])); b.setId(3100 + i); g.addView(b); if (i == mode(c, titleId)) b.setChecked(true); }
+         box.addView(g);
+-        TextView l = new TextView(c); l.setText("FSR sharpness"); box.addView(l);
++        TextView l = new TextView(c); l.setText(AuroraText.label(c, "FSR sharpness")); box.addView(l);
+         RadioGroup s = new RadioGroup(c);
+         s.setOrientation(LinearLayout.HORIZONTAL);
+         for (int i = 0; i < SHARPS.length; i++) { RadioButton b = new RadioButton(c); b.setText(SHARP_NAMES[i]); b.setId(3200 + i); s.addView(b); if (SHARPS[i] == sharp(c, titleId)) b.setChecked(true); }
+@@ -140,7 +140,7 @@ final class GameUpscaler {
+     /** A game on the DLSS stand-in: "Upscaler" (the stand-in's mode) with Motion clarity and Temporal sharpness under GSR 2, the sharpness alone ("FSR sharpness") under FSR 1. Each applied at once */
+     private static void dlssRows(Context c, String titleId, LinearLayout box) {
+         TextView head = new TextView(c);
+-        head.setText("Upscaler");
++        head.setText(AuroraText.label(c, "Upscaler"));
+         head.setPadding(0, 24, 0, 0);
+         box.addView(head);
+         RadioGroup g = new RadioGroup(c);
+diff --git a/android/app/src/main/java/dev/nxnative/android/MainActivity.java b/android/app/src/main/java/dev/nxnative/android/MainActivity.java
+index 46fb8a3..ebfed4c 100644
+--- a/android/app/src/main/java/dev/nxnative/android/MainActivity.java
++++ b/android/app/src/main/java/dev/nxnative/android/MainActivity.java
+@@ -305,7 +305,7 @@ public final class MainActivity extends Activity {
+         trailing.addView(dev.peanuts.ui.Library.screensOffButton(this), sop);
+         trailing.addView(headerButtons());
+         // PEANUTS end
+-        content.addView(dev.peanuts.ui.Library.homeHeader(Ui.header(this, customLogo(), "Peanuts Pro FreeCam", "Full Catalog v1.8", trailing)));   // the build identifier under the title (Prefs.buildId, the part of the overlay's build tag after the app's name), so a screenshot of Home names its build; Settings › About has the full tag   // PEANUTS: rebrand; homeHeader: the build line is no focus stop
++        content.addView(dev.peanuts.ui.Library.homeHeader(Ui.header(this, customLogo(), "Peanuts Pro FreeCam", AuroraText.label(this, "Full Catalog v1.8"), trailing)));   // the build identifier under the title (Prefs.buildId, the part of the overlay's build tag after the app's name), so a screenshot of Home names its build; Settings › About has the full tag   // PEANUTS: rebrand; homeHeader: the build line is no focus stop
+         dev.peanuts.ui.BottomScreen.home(this, () -> page(true));   // PEANUTS: bottom screen (dev.peanuts.ui.BottomScreen)
+         accessCard = accessCard();
+         Ui.add(content, accessCard, 16);
+@@ -475,6 +475,10 @@ public final class MainActivity extends Activity {
+         t.setTextIsSelectable(true);
+         Ui.add(about, t, 10);
+         refreshSettings();
++        Ui.add(content, Ui.section(this, "App"), Ui.SECTION_GAP);
++        settingsCard(content).addView(new Ui.Setting(this, "🌐", "Language", v -> AuroraText.pick(this, this::build))
++                .value(AuroraText.selection(this)).chevron(this).view);
++
+         dev.peanuts.ui.SettingsPage.lay(this, content);   // PEANUTS: these rows in ten sections, one shown: a sidebar of them on a wide window, a drawer on a phone (dev.peanuts.ui.SettingsPage)
+     }
+ 
+@@ -489,7 +493,7 @@ public final class MainActivity extends Activity {
+         if (overlayRow.toggle.isChecked() != ov) overlayRow.toggle.setChecked(ov);
+         int n = 0;
+         for (String[] it : Overlay.ITEMS) if (Prefs.overlayItem(this, it[0])) n++;
+-        overlayRow.value(ov ? "On · " + n + " of " + Overlay.ITEMS.length + " items" : "Off");
++        overlayRow.value(ov ? AuroraText.string(this, R.string.aurora_overlay_count, n, Overlay.ITEMS.length) : "Off");
+         resRow.value(resLabel());
+         capRow.value(capLabel(Prefs.fpsCap(this)));
+         upsRow.value(GameUpscaler.MODES[GameUpscaler.mode(this)]);
+diff --git a/android/app/src/main/java/dev/nxnative/android/Overlay.java b/android/app/src/main/java/dev/nxnative/android/Overlay.java
+index 463f402..cbc4acb 100644
+--- a/android/app/src/main/java/dev/nxnative/android/Overlay.java
++++ b/android/app/src/main/java/dev/nxnative/android/Overlay.java
+@@ -70,7 +70,7 @@ final class Overlay {
+     /** The master switch and, below it, one switch per item (main screen dialog, in-game settings) */
+     static void rows(Context c, LinearLayout box, String masterNote) {
+         CheckBox master = new CheckBox(c);
+-        master.setText("Show the overlay over the game" + (masterNote != null ? masterNote : ""));
++        master.setText(AuroraText.label(c, "Show the overlay over the game") + (masterNote != null ? masterNote : ""));
+         master.setChecked(Prefs.overlay(c));
+         box.addView(master);
+         List<CheckBox> items = new ArrayList<>();
+diff --git a/android/app/src/main/java/dev/nxnative/android/PadFocus.java b/android/app/src/main/java/dev/nxnative/android/PadFocus.java
+index 117e1e1..c4ca93d 100644
+--- a/android/app/src/main/java/dev/nxnative/android/PadFocus.java
++++ b/android/app/src/main/java/dev/nxnative/android/PadFocus.java
+@@ -71,7 +71,32 @@ final class PadFocus {
+         Builder(Context c, int theme) { super(c, theme); }
+ 
+         // PEANUTS begin: a confirm button that does something clicks (dev.peanuts.ui.Feel; an OK without a listener stays as quiet as Cancel)
+-        @Override public Builder setPositiveButton(CharSequence text, android.content.DialogInterface.OnClickListener l) { super.setPositiveButton(text, dev.peanuts.ui.Feel.confirm(l)); return this; }
++        @Override public Builder setPositiveButton(CharSequence text, android.content.DialogInterface.OnClickListener l) {
++            super.setPositiveButton(visible(text), dev.peanuts.ui.Feel.confirm(l));
++            return this;
++        }
++
++        @Override public Builder setTitle(CharSequence title) {
++            super.setTitle(visible(title));
++            return this;
++        }
++
++        @Override public Builder setNegativeButton(CharSequence text, android.content.DialogInterface.OnClickListener l) {
++            super.setNegativeButton(visible(text), l);
++            return this;
++        }
++
++        @Override public Builder setSingleChoiceItems(CharSequence[] items, int checked,
++                                                       android.content.DialogInterface.OnClickListener listener) {
++            CharSequence[] labels = items.clone();
++            for (int i = 0; i < labels.length; i++) labels[i] = visible(labels[i]);
++            super.setSingleChoiceItems(labels, checked, listener);
++            return this;
++        }
++
++        private CharSequence visible(CharSequence text) {
++            return text instanceof String ? AuroraText.label(getContext(), (String) text) : text;
++        }
+         // PEANUTS end
+ 
+         @Override public AlertDialog create() {
+diff --git a/android/app/src/main/java/dev/nxnative/android/SidePanel.java b/android/app/src/main/java/dev/nxnative/android/SidePanel.java
+index f26c324..182a84b 100644
+--- a/android/app/src/main/java/dev/nxnative/android/SidePanel.java
++++ b/android/app/src/main/java/dev/nxnative/android/SidePanel.java
+@@ -368,6 +368,7 @@ final class SidePanel extends FrameLayout {
+     private TextView head(String t) {
+         TextView h = new TextView(act);
+         h.setText(t);
++        AuroraText.translateLabel(h);
+         h.setTypeface(Typeface.DEFAULT_BOLD);
+         h.setTextSize(15);
+         h.setPadding(0, Math.round(18 * getResources().getDisplayMetrics().density), 0, 0);
+@@ -378,6 +379,7 @@ final class SidePanel extends FrameLayout {
+     private TextView note(String t) {
+         TextView n = new TextView(act);
+         n.setText(t);
++        AuroraText.translateLabel(n);
+         n.setTextSize(12);
+         n.setTextColor(Color.LTGRAY);
+         box.addView(n);
+diff --git a/android/app/src/main/java/dev/nxnative/android/StepSlider.java b/android/app/src/main/java/dev/nxnative/android/StepSlider.java
+index 7c3c093..e914325 100644
+--- a/android/app/src/main/java/dev/nxnative/android/StepSlider.java
++++ b/android/app/src/main/java/dev/nxnative/android/StepSlider.java
+@@ -37,8 +37,8 @@ final class StepSlider {
+             LinearLayout ends = new LinearLayout(c);
+             ends.setOrientation(LinearLayout.HORIZONTAL);
+             TextView l = new TextView(c), r = new TextView(c);
+-            l.setText(left == null ? "" : left);
+-            r.setText(right == null ? "" : right);
++            l.setText(left == null ? "" : AuroraText.label(c, left));
++            r.setText(right == null ? "" : AuroraText.label(c, right));
+             l.setTextSize(12);
+             r.setTextSize(12);
+             r.setGravity(android.view.Gravity.END);
+diff --git a/android/app/src/main/java/dev/nxnative/android/SupportedGames.java b/android/app/src/main/java/dev/nxnative/android/SupportedGames.java
+index e64a688..9846742 100644
+--- a/android/app/src/main/java/dev/nxnative/android/SupportedGames.java
++++ b/android/app/src/main/java/dev/nxnative/android/SupportedGames.java
+@@ -7,7 +7,13 @@ import android.widget.*;
+ import android.view.View;
+ import android.text.TextWatcher;
+ import android.text.Editable;
++import java.io.BufferedReader;
+ import java.io.File;
++import java.io.IOException;
++import java.io.InputStreamReader;
++import java.nio.charset.StandardCharsets;
++import java.time.LocalDate;
++import java.time.format.DateTimeFormatter;
+ import java.util.*;
+ 
+ public final class SupportedGames {
+@@ -20,17 +26,63 @@ public final class SupportedGames {
+         t.setText(s); t.setTextSize(size); t.setTextColor(a.getColor(color));
+         return t;
+     }
++    private static final class Release {
++        final String version;
++        final LocalDate date;
++        final boolean added;
++
++        Release(String version, String date, boolean added) {
++            this.version = version;
++            this.date = LocalDate.parse(date);
++            this.added = added;
++        }
++
++        String caption(Activity a) {
++            String day = AuroraText.isPortuguese(a)
++                    ? date.format(DateTimeFormatter.ofPattern("dd/MM/uuuu", Locale.ROOT))
++                    : date.toString();
++            int id = added ? R.string.aurora_games_new : R.string.aurora_games_baseline;
++            return AuroraText.string(a, id, version) + " · " + day;
++        }
++    }
++
++    private static Map<String, Release> releases(Activity a) {
++        Map<String, Release> releases = new HashMap<>();
++        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
++                a.getAssets().open("aurora_catalog_releases.tsv"), StandardCharsets.UTF_8))) {
++            for (String line; (line = reader.readLine()) != null; ) {
++                String[] fields = line.split("\t");
++                if (fields.length == 4) {
++                    releases.put(fields[0], new Release(fields[1], fields[2], fields[3].equals("added")));
++                }
++            }
++        } catch (IOException e) {
++            android.util.Log.w("SupportedGames", "Could not read Aurora release history", e);
++        }
++        return releases;
++    }
++
+     public static void fill(Activity a, LinearLayout page) {
+         List<Profile> games = new ArrayList<>(Profile.all());
+         games.sort(Comparator.comparing(p -> p.name, String.CASE_INSENSITIVE_ORDER));
++        Map<String, Release> releases = releases(a);
++        Release latest = releases.values().stream().filter(r -> r.added)
++                .max(Comparator.comparing(r -> r.date)).orElse(null);
+         EditText search = new EditText(a);
+         search.setSingleLine(true);
+-        search.setHint("Search games or Title ID");
++        search.setHint(AuroraText.string(a, R.string.aurora_games_search));
+         search.setTextColor(a.getColor(R.color.bn_text));
+         search.setHintTextColor(a.getColor(R.color.bn_text_2));
+         page.addView(search);
++        CheckBox recent = new CheckBox(a);
++        if (latest != null) {
++            recent.setText(AuroraText.string(a, R.string.aurora_games_recent, latest.version));
++            recent.setTextColor(a.getColor(R.color.bn_text));
++            page.addView(recent);
++        }
+         TextView count = text(a, "", 14, R.color.bn_text_2);
+         page.addView(count);
++        page.addView(text(a, AuroraText.string(a, R.string.aurora_games_coverage), 12, R.color.bn_text_2));
+         LinearLayout list = new LinearLayout(a);
+         list.setOrientation(LinearLayout.VERTICAL);
+         page.addView(list);
+@@ -39,7 +91,11 @@ public final class SupportedGames {
+             list.removeAllViews();
+             int visible = 0;
+             for (Profile p : games) {
+-                if (!(p.name + " " + p.titleId).toLowerCase(Locale.ROOT).contains(q)) continue;
++                Release release = releases.get(p.titleId);
++                if (latest != null && recent.isChecked()
++                        && (release == null || !release.added || !latest.version.equals(release.version))) continue;
++                String caption = release == null ? "" : release.caption(a);
++                if (!(p.name + " " + p.titleId + " " + caption).toLowerCase(Locale.ROOT).contains(q)) continue;
+                 int index = visible++;
+                 if (index % 3 == 0) {
+                     LinearLayout band = new LinearLayout(a);
+@@ -80,15 +136,25 @@ public final class SupportedGames {
+                 title.setTypeface(null,android.graphics.Typeface.BOLD);
+                 card.addView(title);
+                 String versions = p.supportedShort();
+-                card.addView(text(a,versions.isEmpty() ? "Version not specified" : versions,11,R.color.bn_text_2));
++                String supported = versions.isEmpty() ? AuroraText.label(a, "Version not specified") : versions;
++                card.addView(text(a, supported, 11, R.color.bn_text_2));
++                if (release != null) {
++                    int color = release.added ? R.color.bn_accent : R.color.bn_text_2;
++                    card.addView(text(a, caption, 11, color));
++                }
+                 card.setFocusable(true);
+                 card.setClickable(true);
+-                card.setOnClickListener(v -> new android.app.AlertDialog.Builder(a)
+-                    .setTitle(p.name).setMessage("Title ID: " + p.titleId + "\\nVersions: " + versions + "\\n" + ("bring-up".equalsIgnoreCase(p.status) ? "Experimental profile" : "Profile included"))
+-                    .setPositiveButton("OK",null).show());
++                card.setOnClickListener(v -> {
++                    String status = AuroraText.label(a, "bring-up".equalsIgnoreCase(p.status)
++                            ? "Experimental profile" : "Profile included");
++                    new PadFocus.Builder(a).setTitle(p.name)
++                            .setMessage(AuroraText.string(a, R.string.aurora_games_info, p.titleId, supported, caption, status))
++                            .setPositiveButton("OK", null).show();
++                });
+             }
+-            count.setText(visible + " / " + games.size() + " games · Profiles do not guarantee flawless gameplay");
++            count.setText(AuroraText.string(a, R.string.aurora_games_count, visible, games.size()));
+         };
++        recent.setOnCheckedChangeListener((button, checked) -> render.run());
+         search.addTextChangedListener(new TextWatcher() {
+             public void beforeTextChanged(CharSequence s,int start,int count,int after) {}
+             public void onTextChanged(CharSequence s,int start,int before,int count) { render.run(); }
+diff --git a/android/app/src/main/java/dev/nxnative/android/TouchControls.java b/android/app/src/main/java/dev/nxnative/android/TouchControls.java
+index 29cabef..b626cec 100644
+--- a/android/app/src/main/java/dev/nxnative/android/TouchControls.java
++++ b/android/app/src/main/java/dev/nxnative/android/TouchControls.java
+@@ -633,7 +633,7 @@ final class TouchControls extends View {
+         ss.setMax(90); ss.setProgress(Math.round(scale * 100) - 60);     // 60..150 %
+         os.setKeyProgressIncrement(5); ss.setKeyProgressIncrement(5);   // the D-pad's left / right: 5 % a press
+         hb.setText("Vibrate on press"); hb.setChecked(haptics);
+-        lb.setText("Show the log over the game"); lb.setChecked(showLog(ctx));
++        lb.setText(AuroraText.label(ctx, "Show the log over the game")); lb.setChecked(showLog(ctx));
+         tb.setText("Show / hide button (top centre)"); tb.setChecked(button);
+         tb.setOnCheckedChangeListener((b, v) -> setToggleButton(v));
+         Runnable labels = () -> { ol.setText("Opacity " + (os.getProgress() + 10) + " %"); sl.setText("Size " + (ss.getProgress() + 60) + " %"); };
+diff --git a/android/app/src/main/java/dev/nxnative/android/Ui.java b/android/app/src/main/java/dev/nxnative/android/Ui.java
+index 7340b46..7581771 100644
+--- a/android/app/src/main/java/dev/nxnative/android/Ui.java
++++ b/android/app/src/main/java/dev/nxnative/android/Ui.java
+@@ -105,7 +105,7 @@ final class Ui {
+     /** A group's label above its card (the settings page, a sheet) */
+     static TextView section(Context c, CharSequence s) {
+         TextView t = text(c, s, 12, R.color.bn_text_2, 700);
+-        t.setAllCaps(true);
++        AuroraText.showTranslated(t, true);
+         t.setLetterSpacing(0.08f);
+         t.setPadding(dp(c, 4), 0, 0, 0);
+         t.setAccessibilityHeading(true);
+@@ -433,6 +433,7 @@ final class Ui {
+         b.setIncludeFontPadding(false);
+         b.setTextColor(col(c, textColor(k)));
+         style(c, b, k, 14);
++        AuroraText.translateLabel(b);
+         b.setOnClickListener(dev.peanuts.ui.Feel.button(l));   // PEANUTS: a button's tap clicks and dips (dev.peanuts.ui.Feel; null stays null)
+         return b;
+     }
+@@ -563,6 +564,7 @@ final class Ui {
+             this.title = text(c, title, 15, R.color.bn_text, 600);
+             this.title.setMaxLines(3);   // one line at the normal font scale (titles are kept short); a large font scale wraps it rather than cut it
+             this.title.setEllipsize(TextUtils.TruncateAt.END);
++            AuroraText.translateLabel(this.title);
+             col.addView(this.title);
+             value = small(c, "");
+             value.setMaxLines(8);
+@@ -570,6 +572,7 @@ final class Ui {
+             value.setVisibility(View.GONE);   // shown by value(…) when there is one
+             LinearLayout.LayoutParams vp = fill();
+             vp.topMargin = dp(c, 1);
++            AuroraText.translateLabel(value);
+             col.addView(value, vp);
+             status = text(c, "", 12, R.color.bn_danger, 600);
+             status.setMaxLines(2);
+@@ -594,6 +597,7 @@ final class Ui {
+             note.setMaxLines(8);
+             note.setEllipsize(TextUtils.TruncateAt.END);
+             note.setVisibility(View.GONE);   // shown by note(…)
++            AuroraText.translateLabel(note);
+             col.addView(note);
+             view.addView(col, weight());
+         }
+@@ -716,7 +720,7 @@ final class Ui {
+             boolean on = k == sel;
+             LinearLayout tab = new LinearLayout(c);
+             tab.setOrientation(LinearLayout.VERTICAL);
+-            TextView t = text(c, labels[k], 15, on ? R.color.bn_accent : R.color.bn_text_2, on ? 700 : 600);
++            TextView t = text(c, AuroraText.label(c, labels[k]), 15, on ? R.color.bn_accent : R.color.bn_text_2, on ? 700 : 600);
+             t.setSingleLine(true);
+             t.setGravity(Gravity.CENTER);
+             t.setPadding(dp(c, 12), dp(c, 10), dp(c, 12), dp(c, 8));
+@@ -731,7 +735,7 @@ final class Ui {
+             tab.setClickable(true);
+             tab.setFocusable(true);
+             tab.setSelected(on);
+-            tab.setContentDescription(labels[k] + (on ? ", tab, selected" : ", tab"));
++            tab.setContentDescription(AuroraText.label(c, labels[k]) + (on ? ", tab, selected" : ", tab"));
+             tab.setOnClickListener(v -> { if (i != sel) pick.accept(i); });
+             row.addView(tab, wrap());
+         }
+diff --git a/android/app/src/main/java/dev/peanuts/ingame/GameMenu.java b/android/app/src/main/java/dev/peanuts/ingame/GameMenu.java
+index 79a0aa2..a7e3f9f 100644
+--- a/android/app/src/main/java/dev/peanuts/ingame/GameMenu.java
++++ b/android/app/src/main/java/dev/peanuts/ingame/GameMenu.java
+@@ -230,7 +230,7 @@ public final class GameMenu extends FrameLayout {
+         r.addView(ic, new LinearLayout.LayoutParams(is, is));
+         TextView t = label(c, 15, Look.TEXT, Typeface.NORMAL);
+         t.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+-        t.setText(it.title);
++        t.setText(dev.nxnative.android.AuroraText.label(getContext(), it.title));
+         t.setSingleLine(true);
+         t.setEllipsize(TextUtils.TruncateAt.END);
+         t.setPadding(Look.dp(c, 10), 0, Look.dp(c, 8), 0);
+@@ -249,7 +249,7 @@ public final class GameMenu extends FrameLayout {
+             r.addView(ch, cl);
+         }
+         r.setClickable(true);
+-        r.setContentDescription(it.title);
++        r.setContentDescription(dev.nxnative.android.AuroraText.label(getContext(), it.title));
+         r.setOnClickListener(v -> { pad = false; sel = indexOf(it); paint(); press(it); });
+         return r;
+     }
+diff --git a/android/app/src/main/java/dev/peanuts/ingame/GameRows.java b/android/app/src/main/java/dev/peanuts/ingame/GameRows.java
+index de4e854..139e348 100644
+--- a/android/app/src/main/java/dev/peanuts/ingame/GameRows.java
++++ b/android/app/src/main/java/dev/peanuts/ingame/GameRows.java
+@@ -127,6 +127,7 @@ public final class GameRows extends LinearLayout {
+         r.addView(ic, new LayoutParams(is, is));
+         TextView t = text(c, 15, Look.TEXT, false);
+         t.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
++        dev.nxnative.android.AuroraText.translateLabel(t);
+         t.setText(it.title());
+         t.setSingleLine(true);
+         t.setEllipsize(TextUtils.TruncateAt.END);
+@@ -147,7 +148,7 @@ public final class GameRows extends LinearLayout {
+         }
+         r.setFocusable(true);
+         r.setClickable(true);
+-        r.setContentDescription(it.title());
++        r.setContentDescription(dev.nxnative.android.AuroraText.label(r.getContext(), it.title()));
+         r.setOnClickListener(v -> press.run());
+         return r;
+     }
+diff --git a/android/app/src/main/java/dev/peanuts/ui/LayoutChoice.java b/android/app/src/main/java/dev/peanuts/ui/LayoutChoice.java
+index f6f767c..9a82ccf 100644
+--- a/android/app/src/main/java/dev/peanuts/ui/LayoutChoice.java
++++ b/android/app/src/main/java/dev/peanuts/ui/LayoutChoice.java
+@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
+ import android.widget.ScrollView;
+ import android.widget.TextView;
+ 
++import dev.nxnative.android.AuroraText;
+ import dev.nxnative.android.R;
+ import dev.peanuts.PeanutsPrefs;
+ 
+@@ -57,9 +58,9 @@ public final class LayoutChoice {
+         int pad = Math.round(22 * dp);
+         box.setPadding(pad, Math.round(20 * dp), pad, Math.round(10 * dp));
+         box.setBackground(PUi.round(PUi.col(a, R.color.bn_card), 28 * dp, 0, 0));
+-        TextView title = PUi.text(a, "How should the in-game menus look?", 22, R.color.bn_text, 700);
++        TextView title = PUi.text(a, AuroraText.label(a, "How should the in-game menus look?"), 22, R.color.bn_text, 700);
+         box.addView(title);
+-        TextView intro = PUi.text(a, "Pick how the menus look in a game. The menu's own settings change it later.", 14, R.color.bn_text_2, 400);
++        TextView intro = PUi.text(a, AuroraText.label(a, "Pick how the menus look in a game. The menu's own settings change it later."), 14, R.color.bn_text_2, 400);
+         LinearLayout.LayoutParams ip = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         ip.topMargin = Math.round(6 * dp);
+         box.addView(intro, ip);
+@@ -86,7 +87,7 @@ public final class LayoutChoice {
+         ScrollView list = new ScrollView(a);   // a short screen: the cards scroll between the title and Later
+         list.addView(cards);
+         box.addView(list, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));   // the one to shrink
+-        TextView later = PUi.text(a, "Later", 15, R.color.bn_accent, 700);
++        TextView later = PUi.text(a, AuroraText.label(a, "Later"), 15, R.color.bn_accent, 700);
+         int lh = Math.round(16 * dp), lv = Math.round(10 * dp);
+         later.setPadding(lh, lv, lh, lv);
+         later.setBackground(PUi.ripple(a, PUi.round(android.graphics.Color.TRANSPARENT, 99 * dp, 0, 0)));
+@@ -137,7 +138,7 @@ public final class LayoutChoice {
+         c.setFocusable(true);
+         c.setClickable(true);
+         c.setDefaultFocusHighlightEnabled(false);
+-        c.setContentDescription(NAMES[i]);
++        c.setContentDescription(AuroraText.label(a, NAMES[i]));
+         ImageView pic = new ImageView(a);
+         int id = a.getResources().getIdentifier(PICTURES[i], "drawable", a.getPackageName());
+         if (id != 0) pic.setImageResource(id);
+@@ -153,12 +154,12 @@ public final class LayoutChoice {
+                     android.view.Gravity.TOP | android.view.Gravity.START));
+         }
+         c.addView(top, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(PICTURE_DP * dp)));   // one box for every picture, so the names line up
+-        TextView name = PUi.text(a, NAMES[i], 15, R.color.bn_text, 700);
++        TextView name = PUi.text(a, AuroraText.label(a, NAMES[i]), 15, R.color.bn_text, 700);
+         name.setTypeface(Typeface.create("sans-serif-medium", Typeface.BOLD));
+         LinearLayout.LayoutParams np = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         np.topMargin = Math.round(8 * dp);
+         c.addView(name, np);
+-        TextView line = PUi.text(a, LINES[i], 12.5f, R.color.bn_text_2, 400);
++        TextView line = PUi.text(a, AuroraText.label(a, LINES[i]), 12.5f, R.color.bn_text_2, 400);
+         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+         lp.topMargin = Math.round(2 * dp);
+         c.addView(line, lp);
+diff --git a/android/app/src/main/java/dev/peanuts/ui/Library.java b/android/app/src/main/java/dev/peanuts/ui/Library.java
+index d55d8f1..519d2cc 100644
+--- a/android/app/src/main/java/dev/peanuts/ui/Library.java
++++ b/android/app/src/main/java/dev/peanuts/ui/Library.java
+@@ -39,6 +39,7 @@ import android.widget.ProgressBar;
+ import android.widget.TextView;
+ import android.widget.Toast;
+ 
++import dev.nxnative.android.AuroraText;
+ import dev.nxnative.android.R;
+ import dev.peanuts.PeanutsPrefs;
+ import dev.peanuts.build.BuildListener;
+@@ -281,9 +282,9 @@ public final class Library {
+         LinearLayout column = new LinearLayout(a);
+         column.setOrientation(LinearLayout.VERTICAL);
+         column.setGravity(Gravity.CENTER_HORIZONTAL);
+-        column.addView(PUi.iconButton(a, iconRes, description, PUi.Kind.TONAL, action));
++        column.addView(PUi.iconButton(a, iconRes, AuroraText.label(a, description), PUi.Kind.TONAL, action));
+ 
+-        TextView caption = PUi.text(a, label, 10, R.color.bn_accent, 700);
++        TextView caption = PUi.text(a, AuroraText.label(a, label), 10, R.color.bn_accent, 700);
+         caption.setSingleLine(true);
+         caption.setGravity(Gravity.CENTER);
+         caption.setPadding(0, PUi.dp(a, 2), 0, 0);
+@@ -1144,15 +1145,16 @@ public final class Library {
+         HorizontalScrollView chips = new HorizontalScrollView(a);
+         chips.setHorizontalScrollBarEnabled(false);
+         LinearLayout chipRow = PUi.row(a);
+-        chip(chipRow, "All " + all, ALL);
++        chip(chipRow, AuroraText.label(a, "All") + " " + all, ALL);
+         if (building > 0) {
+-            SpannableString s = new SpannableString("Building " + building);
+-            if (filter != BUILDING) s.setSpan(new ForegroundColorSpan(PUi.col(a, R.color.bn_banana)), 9, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // the count in banana: something runs
++            String caption = AuroraText.label(a, "Building") + " ";
++            SpannableString s = new SpannableString(caption + building);
++            if (filter != BUILDING) s.setSpan(new ForegroundColorSpan(PUi.col(a, R.color.bn_banana)), caption.length(), s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);   // the count in banana: something runs
+             chip(chipRow, s, BUILDING);
+         }
+-        chip(chipRow, "Ready " + ready, READY);
+-        chip(chipRow, "Build needed " + toBuild, BUILD);
+-        chip(chipRow, a.getString(R.string.not_supported_yet) + " " + noProfile, NO_PROFILE);
++        chip(chipRow, AuroraText.label(a, "Ready") + " " + ready, READY);
++        chip(chipRow, AuroraText.label(a, "Build needed") + " " + toBuild, BUILD);
++        chip(chipRow, AuroraText.label(a, a.getString(R.string.not_supported_yet)) + " " + noProfile, NO_PROFILE);
+         if (hidden > 0) {
+             // Found in review: lets the player see and remove a confirmed-missing (or currently unreachable) game themselves, through upstream's
+             // own "Game file gone → Remove" dialog, instead of this code ever deleting the record on its own
+@@ -1187,7 +1189,7 @@ public final class Library {
+         LinearLayout.LayoutParams slp = new LinearLayout.LayoutParams(PUi.dp(a, 44), PUi.dp(a, 44)); slp.leftMargin = PUi.dp(a, 4);
+         slp.gravity = android.view.Gravity.CENTER_VERTICAL;
+         top.addView(sortB, slp);
+-        Button findB = PUi.button(a, find.isEmpty() ? "Find" : PUi.joined("Find", find), PUi.Kind.QUIET, Haptics.on(Haptics.Word.CLICK, v -> findDialog()));
++        Button findB = PUi.button(a, find.isEmpty() ? "Find" : PUi.joined(AuroraText.label(a, "Find"), find), PUi.Kind.QUIET, Haptics.on(Haptics.Word.CLICK, v -> findDialog()));
+         findB.setCompoundDrawablesRelativeWithIntrinsicBounds(PUi.icon(a, R.drawable.ic_search, R.color.bn_accent), null, null, null);
+         findB.setCompoundDrawablePadding(PUi.dp(a, 6));
+         findB.setOnKeyListener(shoulders);
+@@ -1438,7 +1440,7 @@ public final class Library {
+         LinearLayout wrap = new LinearLayout(a);
+         wrap.setOrientation(LinearLayout.VERTICAL);
+         wrap.addView(e, PUi.fill());
+-        AlertDialog d = PUi.sheet(a, "Find", wrap).setPositiveButton("Find", (x, w) -> { find = e.getText().toString().trim(); animateNext = true; render(); })
++        AlertDialog d = PUi.sheet(a, AuroraText.label(a, "Find"), wrap).setPositiveButton(AuroraText.label(a, "Find"), (x, w) -> { find = e.getText().toString().trim(); animateNext = true; render(); })
+                 .setNegativeButton("Cancel", null).setNeutralButton(find.isEmpty() ? null : "Clear", (x, w) -> { find = ""; animateNext = true; render(); }).create();
+         e.setOnEditorActionListener((v, id, ev) -> { find = e.getText().toString().trim(); d.dismiss(); animateNext = true; render(); return true; });
+         d.show();
+diff --git a/android/app/src/main/java/dev/peanuts/ui/PUi.java b/android/app/src/main/java/dev/peanuts/ui/PUi.java
+index 1eb630b..5573474 100644
+--- a/android/app/src/main/java/dev/peanuts/ui/PUi.java
++++ b/android/app/src/main/java/dev/peanuts/ui/PUi.java
+@@ -146,7 +146,7 @@ public final class PUi {
+     /** A group's label above its card (the settings page, a sheet) */
+     public static TextView section(Context c, CharSequence s) {
+         TextView t = text(c, s, 12, R.color.bn_text_2, 700);
+-        t.setAllCaps(true);
++        dev.nxnative.android.AuroraText.showTranslated(t, true);
+         t.setLetterSpacing(0.08f);
+         t.setPadding(dp(c, 4), 0, 0, 0);
+         t.setAccessibilityHeading(true);
+@@ -441,6 +441,7 @@ public final class PUi {
+         b.setIncludeFontPadding(false);
+         b.setTextColor(col(c, textColor(k)));
+         style(c, b, k, 14);
++        dev.nxnative.android.AuroraText.translateLabel(b);
+         b.setOnClickListener(l);
+         return b;
+     }
+@@ -565,8 +566,10 @@ public final class PUi {
+             TextView t = text(c, title, 16, R.color.bn_text, 600);
+             t.setSingleLine(true);
+             t.setEllipsize(TextUtils.TruncateAt.END);
++            dev.nxnative.android.AuroraText.translateLabel(t);
+             col.addView(t);
+             value = small(c, "");
++            dev.nxnative.android.AuroraText.translateLabel(value);
+             value.setMaxLines(2);
+             value.setEllipsize(TextUtils.TruncateAt.END);
+             value.setVisibility(View.GONE);   // shown by value(…) when there is one
+diff --git a/android/app/src/main/java/dev/peanuts/ui/SettingsPage.java b/android/app/src/main/java/dev/peanuts/ui/SettingsPage.java
+index 313c43a..30d877b 100644
+--- a/android/app/src/main/java/dev/peanuts/ui/SettingsPage.java
++++ b/android/app/src/main/java/dev/peanuts/ui/SettingsPage.java
+@@ -26,6 +26,7 @@ import java.util.LinkedHashMap;
+ import java.util.List;
+ import java.util.Map;
+ 
++import dev.nxnative.android.AuroraText;
+ import dev.nxnative.android.R;
+ 
+ /**
+@@ -258,7 +259,7 @@ public final class SettingsPage {
+         ic.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+         ic.setImageDrawable(Icons.get(a, icon(s), Icons.Ink.NORMAL));
+         t.addView(ic, new LinearLayout.LayoutParams(PUi.dp(a, 30), PUi.dp(a, 30)));
+-        TextView name = PUi.text(a, s.label, 17, R.color.bn_text, 700);
++        TextView name = PUi.text(a, AuroraText.label(a, s.label), 17, R.color.bn_text, 700);
+         PUi.add(t, name, 12);
+         TextView line = PUi.text(a, SettingsSections.summary(s, twoScreens), 14, R.color.bn_text_2, 400);
+         line.setMaxLines(4);
+@@ -266,7 +267,7 @@ public final class SettingsPage {
+         PUi.add(t, line, 4);
+         t.setClickable(true);
+         t.setFocusable(true);
+-        t.setContentDescription(s.label + ". " + SettingsSections.summary(s, twoScreens));
++        t.setContentDescription(AuroraText.label(a, s.label) + ". " + AuroraText.label(a, SettingsSections.summary(s, twoScreens)));
+         t.setOnClickListener(v -> {
+             Haptics.play(v, Haptics.Word.CLICK);
+             show(s.key, true);
+@@ -430,7 +431,7 @@ public final class SettingsPage {
+         LinearLayout t = new LinearLayout(a);
+         t.setOrientation(LinearLayout.VERTICAL);
+         t.setPadding(PUi.dp(a, wide ? 4 : 14), 0, PUi.dp(a, 8), 0);
+-        TextView title = wide ? PUi.heading(a, s.label) : PUi.text(a, s.label, 22, R.color.bn_text, 800);
++        TextView title = wide ? PUi.heading(a, AuroraText.label(a, s.label)) : PUi.text(a, AuroraText.label(a, s.label), 22, R.color.bn_text, 800);
+         title.setAccessibilityHeading(true);
+         t.addView(title);
+         t.addView(wide ? line(a, s.line, 13) : line(a, "Settings", 12));
+@@ -440,14 +441,14 @@ public final class SettingsPage {
+     }
+ 
+     private static TextView line(Activity a, String s, float sp) {
+-        TextView t = PUi.text(a, s, sp, R.color.bn_text_2, 400);
++        TextView t = PUi.text(a, AuroraText.label(a, s), sp, R.color.bn_text_2, 400);
+         t.setPadding(PUi.dp(a, 2), PUi.dp(a, 1), 0, 0);
+         return t;
+     }
+ 
+     /** A square icon button of the app (Ui.iconButton) with a Peanuts icon in it; fallback, the app's own drawable */
+     private static ImageView iconButton(Activity a, String icon, int fallback, String description, View.OnClickListener l) {
+-        ImageView b = PUi.iconButton(a, fallback, description, PUi.Kind.TONAL, l);
++        ImageView b = PUi.iconButton(a, fallback, AuroraText.label(a, description), PUi.Kind.TONAL, l);
+         Drawable d = Icons.get(a, icon, Icons.Ink.NORMAL);
+         if (d != null) b.setImageDrawable(d);
+         return b;
+@@ -516,7 +517,7 @@ public final class SettingsPage {
+         ic.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+         int size = PUi.dp(a, big ? 22 : 20);
+         e.addView(ic, new LinearLayout.LayoutParams(size, size));
+-        TextView t = PUi.text(a, s.label, big ? 15 : 14, R.color.bn_text, 600);
++        TextView t = PUi.text(a, AuroraText.label(a, s.label), big ? 15 : 14, R.color.bn_text, 600);
+         t.setSingleLine(true);
+         t.setEllipsize(android.text.TextUtils.TruncateAt.END);
+         LinearLayout.LayoutParams tp = PUi.weight();
+@@ -524,7 +525,7 @@ public final class SettingsPage {
+         e.addView(t, tp);
+         e.setFocusable(true);
+         e.setClickable(true);
+-        e.setContentDescription(s.label);
++        e.setContentDescription(AuroraText.label(a, s.label));
+         e.setOnClickListener(l);
+         style(e, s.key.equals(current));
+         return e;
+@@ -897,7 +898,7 @@ public final class SettingsPage {
+         LinearLayout box = new LinearLayout(a);
+         box.setOrientation(LinearLayout.VERTICAL);
+         android.widget.EditText q = new android.widget.EditText(a);
+-        q.setHint("Search every setting");
++        q.setHint(AuroraText.label(a, "Search every setting"));
+         q.setTextSize(15);
+         q.setSingleLine(true);
+         q.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+@@ -913,7 +914,7 @@ public final class SettingsPage {
+         LinearLayout results = new LinearLayout(a);
+         results.setOrientation(LinearLayout.VERTICAL);
+         PUi.add(box, results, 4);
+-        android.app.AlertDialog d = PUi.sheet(a, "Search settings", box).setNegativeButton("Close", null).create();
++        android.app.AlertDialog d = PUi.sheet(a, AuroraText.label(a, "Search settings"), box).setNegativeButton(AuroraText.label(a, "Close"), null).create();
+         q.addTextChangedListener(new android.text.TextWatcher() {
+             @Override public void beforeTextChanged(CharSequence x, int st, int c, int af) {}
+             @Override public void onTextChanged(CharSequence x, int st, int b, int c) {}
+@@ -941,7 +942,7 @@ public final class SettingsPage {
+     private static void results(Activity a, android.app.AlertDialog d, LinearLayout out, String query) {
+         out.removeAllViews();
+         if (SettingsSearch.words(query).length == 0) {
+-            PUi.add(out, PUi.small(a, "A row's name, a word of what it does or its value. Advanced's switches are found too."), 8);
++            PUi.add(out, PUi.small(a, AuroraText.label(a, "A row's name, a word of what it does or its value. Advanced's switches are found too.")), 8);
+             return;
+         }
+         List<View> rows = new ArrayList<>();
+@@ -958,8 +959,12 @@ public final class SettingsPage {
+                     if (x == null || r.getVisibility() != View.VISIBLE) continue;
+                     TextView v = value(r);
+                     rows.add(r);
+-                    titles.add(x.title);
+-                    texts.add(SettingsSearch.text(x.title, s.label, SettingsSections.MORE.equals(x.place.group) ? null : x.place.group, v == null ? null : v.getText()));
++                    String title = AuroraText.label(a, x.title);
++                    titles.add(title);
++                    String currentValue = v == null ? "" : v.getText().toString();
++                    texts.add(SettingsSearch.text(x.title, s.label, SettingsSections.MORE.equals(x.place.group) ? null : x.place.group, currentValue)
++                            + " " + title + " " + AuroraText.label(a, s.label) + " " + AuroraText.label(a, x.place.group)
++                            + " " + AuroraText.label(a, currentValue));
+                 }
+             }
+         }
+@@ -970,7 +975,8 @@ public final class SettingsPage {
+             for (int i : hits) {
+                 View row = rows.get(i);
+                 Explained x = places.get(row);
+-                String where = SettingsSections.MORE.equals(x.place.group) ? x.place.section.label : x.place.section.label + ", " + x.place.group;
++                String where = AuroraText.label(a, x.place.section.label);
++                if (!SettingsSections.MORE.equals(x.place.group)) where += ", " + AuroraText.label(a, x.place.group);
+                 PUi.Setting r = new PUi.Setting(a, "", x.title, v -> { d.dismiss(); jump(row); }).value(where).chevron(a);
+                 likeUpstream(r.view);
+                 tileIcon(r.view, iconNow(row));
+diff --git a/android/app/src/main/java/dev/peanuts/ui/SettingsSearch.java b/android/app/src/main/java/dev/peanuts/ui/SettingsSearch.java
+index 5d10955..6e3b622 100644
+--- a/android/app/src/main/java/dev/peanuts/ui/SettingsSearch.java
++++ b/android/app/src/main/java/dev/peanuts/ui/SettingsSearch.java
+@@ -1,6 +1,8 @@
+ package dev.peanuts.ui;
+ 
++import java.text.Normalizer;
+ import java.util.ArrayList;
++import java.util.regex.Pattern;
+ import java.util.List;
+ import java.util.Locale;
+ 
+@@ -11,17 +13,23 @@ import java.util.Locale;
+  * SettingsSearchJvmTest on it.
+  */
+ public final class SettingsSearch {
++    private static final Pattern DIACRITICS = Pattern.compile("\\p{M}+");
++
+     private SettingsSearch() {}
+ 
++    private static String fold(String text) {
++        return DIACRITICS.matcher(Normalizer.normalize(text.toLowerCase(Locale.ROOT), Normalizer.Form.NFD)).replaceAll("");
++    }
++
+     /** The query's words, lower case; none for a blank query */
+     public static String[] words(String query) {
+-        String q = query == null ? "" : query.trim().toLowerCase(Locale.ROOT);
++        String q = query == null ? "" : fold(query.trim());
+         return q.isEmpty() ? new String[0] : q.split("\\s+");
+     }
+ 
+     /** Whether every word is in the text (Advanced's rule) */
+     public static boolean matches(String text, String[] words) {
+-        String hay = text == null ? "" : text.toLowerCase(Locale.ROOT);
++        String hay = text == null ? "" : fold(text);
+         for (String w : words) if (!hay.contains(w)) return false;
+         return true;
+     }
+@@ -42,7 +50,7 @@ public final class SettingsSearch {
+         String q = String.join(" ", w);
+         for (int i = 0; i < titles.size(); i++) {
+             if (!matches(texts.get(i), w)) continue;
+-            String t = titles.get(i).toLowerCase(Locale.ROOT);
++            String t = fold(titles.get(i));
+             if (t.startsWith(q)) start.add(i);
+             else if (matches(t, w)) title.add(i);
+             else rest.add(i);
+diff --git a/android/app/src/main/java/dev/peanuts/ui/SettingsSections.java b/android/app/src/main/java/dev/peanuts/ui/SettingsSections.java
+index e133b0d..b470bf2 100644
+--- a/android/app/src/main/java/dev/peanuts/ui/SettingsSections.java
++++ b/android/app/src/main/java/dev/peanuts/ui/SettingsSections.java
+@@ -79,6 +79,7 @@ public final class SettingsSections {
+                     new Group("Users", r("Users", "user")),
+                     new Group("Miis", r("Miis", "user"))),
+             new Section("app", "App", "settings", "How the app feels, its in-game panel, and its updates.",
++                    new Group("Language", r("Language", "settings")),
+                     new Group("Feel", r("Haptics", "controller"), r("Motion", "play")),
+                     new Group("In-game panel", r("Mods tab", "mods")),
+                     new Group("Updates", r("Check for updates", "download")),
+diff --git a/android/app/src/main/res/values-pt-rBR/aurora_text.xml b/android/app/src/main/res/values-pt-rBR/aurora_text.xml
+new file mode 100644
+index 0000000..903ccf3
+--- /dev/null
++++ b/android/app/src/main/res/values-pt-rBR/aurora_text.xml
+@@ -0,0 +1,209 @@
++<?xml version='1.0' encoding='utf-8'?>
++<resources>
++  <string name="aurora_language">"Idioma"</string>
++  <string name="aurora_language_system">"Usar idioma do celular"</string>
++  <string name="aurora_games_search">"Buscar por jogo, ID ou versão"</string>
++  <string name="aurora_games_recent">"Novos na %1$s"</string>
++  <string name="aurora_games_count">"%1$d / %2$d jogos"</string>
++  <string name="aurora_games_coverage">"A inclusão de um perfil não garante que o jogo funcione sem falhas."</string>
++  <string name="aurora_games_new">"Adicionado na %1$s"</string>
++  <string name="aurora_games_baseline">"Base %1$s"</string>
++  <string name="aurora_games_info">"ID do título: %1$s\nVersões compatíveis do jogo: %2$s\n%3$s\n%4$s"</string>
++  <string name="aurora_overlay_count">"Ligado · %1$d de %2$d itens"</string>
++  <string-array name="aurora_labels">
++    <item>"Configurações"</item>
++    <item>"Buscar configurações"</item>
++    <item>"Buscar em todas as configurações"</item>
++    <item>"Seções das configurações"</item>
++    <item>"Busque pelo nome ou pelo valor de um ajuste. A busca também inclui opções avançadas."</item>
++    <item>"Nenhuma configuração encontrada."</item>
++    <item>"Biblioteca"</item>
++    <item>"Jogos compatíveis"</item>
++    <item>"Veja os perfis de jogos incluídos nesta versão."</item>
++    <item>"Gráficos"</item>
++    <item>"Console"</item>
++    <item>"Controles"</item>
++    <item>"Telas"</item>
++    <item>"Usuários"</item>
++    <item>"Aplicativo"</item>
++    <item>"Ajuda"</item>
++    <item>"Desenvolvedor"</item>
++    <item>"Sobre"</item>
++    <item>"Mais"</item>
++    <item>"Vale para todos os jogos. Os ajustes de cada jogo têm prioridade."</item>
++    <item>"Preferências do aplicativo, menu durante o jogo e atualizações."</item>
++    <item>"Pastas dos jogos, espaço ocupado e tempo jogado."</item>
++    <item>"O que cada tela mostra e quando ela fica ligada."</item>
++    <item>"Quem joga e quais Miis os jogos podem usar."</item>
++    <item>"Testes do aparelho, registros e respostas a perguntas frequentes."</item>
++    <item>"Opções de teste e ADB. Mantenha os valores atuais, salvo quando precisar de um ajuste específico."</item>
++    <item>"Informações sobre o aplicativo, os jogos e os desenvolvedores."</item>
++    <item>"Ajustes de chaves, firmware e relógio que os jogos usam."</item>
++    <item>"Driver"</item>
++    <item>"Imagem"</item>
++    <item>"Desempenho"</item>
++    <item>"Idioma"</item>
++    <item>"Driver gráfico"</item>
++    <item>"Sistema"</item>
++    <item>"Modo do console"</item>
++    <item>"Padrão de cada jogo (geralmente na base)"</item>
++    <item>"Na base"</item>
++    <item>"Portátil"</item>
++    <item>"Resolução"</item>
++    <item>"Escala de resolução"</item>
++    <item>"1x (padrão do jogo)"</item>
++    <item>"Acima de 1x, a imagem fica mais nítida e exige mais do aparelho. Abaixo de 1x, o jogo fica mais leve. Vale ao abrir o jogo de novo."</item>
++    <item>"Escalonamento de imagem"</item>
++    <item>"SGSR 1 (nítido e rápido, em uma etapa)"</item>
++    <item>"Nitidez do FSR"</item>
++    <item>"Filtro CRT"</item>
++    <item>"Resolução dinâmica"</item>
++    <item>"Limite de FPS"</item>
++    <item>"Geração de quadros"</item>
++    <item>"Usar núcleos de alto desempenho"</item>
++    <item>"Usa os núcleos mais rápidos nas tarefas mais pesadas"</item>
++    <item>"Indicadores na tela"</item>
++    <item>"Ligado"</item>
++    <item>"Desligado"</item>
++    <item>"Automático"</item>
++    <item>"Padrão"</item>
++    <item>"Recomendado"</item>
++    <item>"Personalizado"</item>
++    <item>"Buscar"</item>
++    <item>"Buscar"</item>
++    <item>"Ordenar"</item>
++    <item>"Todos"</item>
++    <item>"Preparando"</item>
++    <item>"Prontos"</item>
++    <item>"Precisam de preparo"</item>
++    <item>"Ainda sem suporte"</item>
++    <item>"Preparar todos"</item>
++    <item>"Preparar todos…"</item>
++    <item>"Apagar telas"</item>
++    <item>"Apagar as telas durante o preparo"</item>
++    <item>"Configurações (X)"</item>
++    <item>"Perguntas frequentes"</item>
++    <item>"Jogar"</item>
++    <item>"Preparar"</item>
++    <item>"Preparando"</item>
++    <item>"Fechar"</item>
++    <item>"Cancelar"</item>
++    <item>"Concluído"</item>
++    <item>"Salvar"</item>
++    <item>"Depois"</item>
++    <item>"OK"</item>
++    <item>"Voltar"</item>
++    <item>"Como exibir os menus durante o jogo?"</item>
++    <item>"Escolha como os menus aparecem durante o jogo. Você pode mudar isso depois nas configurações do menu."</item>
++    <item>"Dois menus"</item>
++    <item>"Um menu à direita"</item>
++    <item>"Tela inferior"</item>
++    <item>"Menu do jogo à esquerda e ajustes à direita."</item>
++    <item>"Tudo em um só painel sobre o jogo."</item>
++    <item>"Jogo na tela superior e menu na tela inferior."</item>
++    <item>"Pastas"</item>
++    <item>"Pasta dos jogos"</item>
++    <item>"Pasta de atualizações e DLCs"</item>
++    <item>"Pasta de preparo"</item>
++    <item>"Adicionar pasta"</item>
++    <item>"Espaço"</item>
++    <item>"Armazenamento"</item>
++    <item>"Liberar espaço"</item>
++    <item>"Tempo jogado"</item>
++    <item>"Tempo jogado"</item>
++    <item>"Chaves e firmware"</item>
++    <item>"Chaves"</item>
++    <item>"Firmware"</item>
++    <item>"Relógio"</item>
++    <item>"Horário"</item>
++    <item>"Botões"</item>
++    <item>"Mapeamento de botões"</item>
++    <item>"Toque"</item>
++    <item>"Controles na tela"</item>
++    <item>"Botão de exibir ou ocultar"</item>
++    <item>"Controle"</item>
++    <item>"Controle: painel durante o jogo"</item>
++    <item>"Botão do menu rápido"</item>
++    <item>"Vibração"</item>
++    <item>"Sensibilidade do giroscópio"</item>
++    <item>"Animações"</item>
++    <item>"Tela"</item>
++    <item>"Desempenho"</item>
++    <item>"Geral"</item>
++    <item>"Jogo"</item>
++    <item>"Opções do jogo"</item>
++    <item>"Idioma do jogo"</item>
++    <item>"Trapaças"</item>
++    <item>"Mods"</item>
++    <item>"Aba de mods"</item>
++    <item>"Saves"</item>
++    <item>"Arquivos"</item>
++    <item>"Avançado"</item>
++    <item>"Opções avançadas"</item>
++    <item>"Configuração extra"</item>
++    <item>"Pausar"</item>
++    <item>"Encerrar"</item>
++    <item>"Encerrar jogo"</item>
++    <item>"Compartilhar registro"</item>
++    <item>"Compartilhar registro…"</item>
++    <item>"Fazer backup do save"</item>
++    <item>"Restaurar saves"</item>
++    <item>"Mostrar o diagnóstico sobre o jogo"</item>
++    <item>"Mostrar indicadores sobre o jogo"</item>
++    <item>"Jogador 1"</item>
++    <item>"Inverter L – câmera livre (experimental)"</item>
++    <item>"L fica pressionado até apertar L1. Vale ao abrir o jogo de novo."</item>
++    <item>"Botão L normal. Vale ao abrir o jogo de novo."</item>
++    <item>"Interação"</item>
++    <item>"Resposta tátil"</item>
++    <item>"Painel durante o jogo"</item>
++    <item>"Atualizações"</item>
++    <item>"Buscar atualizações"</item>
++    <item>"Extras"</item>
++    <item>"Experiência fluida"</item>
++    <item>"Tela de início"</item>
++    <item>"Aviso de preparo gráfico"</item>
++    <item>"Aviso do driver gráfico"</item>
++    <item>"Testes"</item>
++    <item>"Verificar compatibilidade"</item>
++    <item>"Teste gráfico"</item>
++    <item>"Perguntas e registros"</item>
++    <item>"Perguntas e respostas"</item>
++    <item>"Testes"</item>
++    <item>"Opções de teste"</item>
++    <item>"Modo desenvolvedor"</item>
++    <item>"Controle por ADB (depuração)"</item>
++    <item>"Catálogo completo v1.8"</item>
++    <item>"Padrão de cada jogo"</item>
++    <item>"Voltar ao jogo"</item>
++    <item>"Pausar jogo"</item>
++    <item>"Menu rápido"</item>
++    <item>"Fazer backup do save"</item>
++    <item>"Encerrar jogo"</item>
++    <item>"Desligado · Automático"</item>
++    <item>"Preparo interrompido"</item>
++    <item>"Adicionar jogo"</item>
++    <item>"Versão não informada"</item>
++    <item>"Perfil experimental"</item>
++    <item>"Perfil incluído"</item>
++    <item>"Vizinho mais próximo (rápido, pixelado)"</item>
++    <item>"Bilinear (rápido, suave)"</item>
++    <item>"FSR 1 (nítido e rápido; pode clarear demais em alguns jogos com driver Qualcomm)"</item>
++    <item>"Nativo (mais nítido e mais lento)"</item>
++    <item>"Mais lento"</item>
++    <item>"Mais rápido"</item>
++    <item>"Menor"</item>
++    <item>"Maior"</item>
++    <item>"Segunda tela"</item>
++    <item>"Jogos sem complemento"</item>
++    <item>"Trocar telas"</item>
++    <item>"Complementos para duas telas"</item>
++    <item>"TV e monitores"</item>
++    <item>"Rotação da tela"</item>
++    <item>"Manter a tela ligada durante o preparo"</item>
++    <item>"Restaurar padrão"</item>
++    <item>"Voltar ao menu do jogo"</item>
++    <item>"Menu do jogo"</item>
++    <item>"Jogo pausado"</item>
++  </string-array>
++</resources>
+\ No newline at end of file
+diff --git a/android/app/src/main/res/values/aurora_text.xml b/android/app/src/main/res/values/aurora_text.xml
+new file mode 100644
+index 0000000..22429fe
+--- /dev/null
++++ b/android/app/src/main/res/values/aurora_text.xml
+@@ -0,0 +1,209 @@
++<?xml version='1.0' encoding='utf-8'?>
++<resources>
++  <string name="aurora_language">"Language"</string>
++  <string name="aurora_language_system">"Use phone language"</string>
++  <string name="aurora_games_search">"Search games, Title ID or release"</string>
++  <string name="aurora_games_recent">"New in %1$s"</string>
++  <string name="aurora_games_count">"%1$d / %2$d games"</string>
++  <string name="aurora_games_coverage">"Included profiles do not guarantee flawless gameplay."</string>
++  <string name="aurora_games_new">"Added in %1$s"</string>
++  <string name="aurora_games_baseline">"Base %1$s"</string>
++  <string name="aurora_games_info">"Title ID: %1$s\nSupported game versions: %2$s\n%3$s\n%4$s"</string>
++  <string name="aurora_overlay_count">"On · %1$d of %2$d items"</string>
++  <string-array name="aurora_labels">
++    <item>"Settings"</item>
++    <item>"Search settings"</item>
++    <item>"Search every setting"</item>
++    <item>"Sections of Settings"</item>
++    <item>"A row's name, a word of what it does or its value. Advanced's switches are found too."</item>
++    <item>"No settings found."</item>
++    <item>"Library"</item>
++    <item>"Supported Games"</item>
++    <item>"Browse the game profiles included in this APK."</item>
++    <item>"Graphics"</item>
++    <item>"Console"</item>
++    <item>"Controls"</item>
++    <item>"Screens"</item>
++    <item>"Users"</item>
++    <item>"App"</item>
++    <item>"Help"</item>
++    <item>"Developer"</item>
++    <item>"About"</item>
++    <item>"More"</item>
++    <item>"For every game. A game's own settings come first."</item>
++    <item>"How the app feels, its in-game panel, and its updates."</item>
++    <item>"Where the app finds your games, the space they take and the time you played."</item>
++    <item>"What each screen shows, and when the screen stays on."</item>
++    <item>"Who plays, and the Miis games can use."</item>
++    <item>"Checks for this device, the log, and answers to common questions."</item>
++    <item>"For testing and for adb. Leave these as they are unless you were asked to change one."</item>
++    <item>"The app, the games in it and the people who made it."</item>
++    <item>"What games find on a console of their own: its keys, its firmware and its clock."</item>
++    <item>"Driver"</item>
++    <item>"Picture"</item>
++    <item>"Speed"</item>
++    <item>"Language"</item>
++    <item>"GPU driver"</item>
++    <item>"System"</item>
++    <item>"Console mode"</item>
++    <item>"Each game's own (most: Docked)"</item>
++    <item>"Docked"</item>
++    <item>"Handheld"</item>
++    <item>"Resolution"</item>
++    <item>"Resolution scale"</item>
++    <item>"1x (the game's own)"</item>
++    <item>"The size the game's picture is drawn at. Above 1x is sharper and heavier, below 1x is lighter. From the next start."</item>
++    <item>"Upscaler"</item>
++    <item>"SGSR 1 (sharp, fast, one pass)"</item>
++    <item>"FSR sharpness"</item>
++    <item>"CRT filter"</item>
++    <item>"Dynamic resolution"</item>
++    <item>"Frame rate cap"</item>
++    <item>"Frame generation"</item>
++    <item>"Use fast cores"</item>
++    <item>"Keeps the busiest threads off the small cores"</item>
++    <item>"Overlay"</item>
++    <item>"On"</item>
++    <item>"Off"</item>
++    <item>"Auto"</item>
++    <item>"Default"</item>
++    <item>"Recommended"</item>
++    <item>"Custom"</item>
++    <item>"Search"</item>
++    <item>"Find"</item>
++    <item>"Sort"</item>
++    <item>"All"</item>
++    <item>"Building"</item>
++    <item>"Ready"</item>
++    <item>"Build needed"</item>
++    <item>"Not Supported Yet"</item>
++    <item>"Build all"</item>
++    <item>"Build all…"</item>
++    <item>"Screens off"</item>
++    <item>"Screens off while a build runs"</item>
++    <item>"Settings (X)"</item>
++    <item>"FAQ"</item>
++    <item>"Play"</item>
++    <item>"Prepare"</item>
++    <item>"Preparing"</item>
++    <item>"Close"</item>
++    <item>"Cancel"</item>
++    <item>"Done"</item>
++    <item>"Save"</item>
++    <item>"Later"</item>
++    <item>"OK"</item>
++    <item>"Back"</item>
++    <item>"How should the in-game menus look?"</item>
++    <item>"Pick how the menus look in a game. The menu's own settings change it later."</item>
++    <item>"Two menus"</item>
++    <item>"One menu at the right"</item>
++    <item>"Bottom screen"</item>
++    <item>"The game menu at the left, the settings at the right."</item>
++    <item>"Everything in one place over the game."</item>
++    <item>"The game in full view on top, the menu below."</item>
++    <item>"Folders"</item>
++    <item>"Game folder"</item>
++    <item>"Update and DLC folder"</item>
++    <item>"Build folder"</item>
++    <item>"Add folder"</item>
++    <item>"Space"</item>
++    <item>"Storage"</item>
++    <item>"Free up space"</item>
++    <item>"Play time"</item>
++    <item>"Played"</item>
++    <item>"Keys and firmware"</item>
++    <item>"Keys"</item>
++    <item>"Firmware"</item>
++    <item>"Clock"</item>
++    <item>"Time of day"</item>
++    <item>"Buttons"</item>
++    <item>"Button mapping"</item>
++    <item>"Touch"</item>
++    <item>"On-screen controls"</item>
++    <item>"Show / hide button"</item>
++    <item>"Controller"</item>
++    <item>"Controller: in-game panel"</item>
++    <item>"Quick menu button"</item>
++    <item>"Rumble"</item>
++    <item>"Motion sensitivity"</item>
++    <item>"Motion"</item>
++    <item>"Display"</item>
++    <item>"Performance"</item>
++    <item>"General"</item>
++    <item>"Game"</item>
++    <item>"Game options"</item>
++    <item>"Game language"</item>
++    <item>"Cheats"</item>
++    <item>"Mods"</item>
++    <item>"Mods tab"</item>
++    <item>"Saves"</item>
++    <item>"Files"</item>
++    <item>"Advanced"</item>
++    <item>"Advanced switches"</item>
++    <item>"Extra environment"</item>
++    <item>"Pause"</item>
++    <item>"Stop"</item>
++    <item>"Stop game"</item>
++    <item>"Share log"</item>
++    <item>"Share log…"</item>
++    <item>"Back up save"</item>
++    <item>"Restore saves"</item>
++    <item>"Show the log over the game"</item>
++    <item>"Show the overlay over the game"</item>
++    <item>"Player 1"</item>
++    <item>"Invert L — free camera (experimental)"</item>
++    <item>"Switch L stays held until L1 is pressed; applies next game start"</item>
++    <item>"Normal L button; applies next game start"</item>
++    <item>"Feel"</item>
++    <item>"Haptics"</item>
++    <item>"In-game panel"</item>
++    <item>"Updates"</item>
++    <item>"Check for updates"</item>
++    <item>"Extras"</item>
++    <item>"Smooth Experience"</item>
++    <item>"Start screen"</item>
++    <item>"Preparing graphics notice"</item>
++    <item>"Graphics driver notice"</item>
++    <item>"Checks"</item>
++    <item>"Readiness check"</item>
++    <item>"Graphics self-test"</item>
++    <item>"Questions and logs"</item>
++    <item>"Questions and answers"</item>
++    <item>"Testing"</item>
++    <item>"Tester settings"</item>
++    <item>"Developer view"</item>
++    <item>"ADB control (debug)"</item>
++    <item>"Full Catalog v1.8"</item>
++    <item>"Each game's own"</item>
++    <item>"Back to the game"</item>
++    <item>"Pause the game"</item>
++    <item>"Quick menu"</item>
++    <item>"Back up the save"</item>
++    <item>"Stop the game"</item>
++    <item>"Off · Auto"</item>
++    <item>"Build stopped"</item>
++    <item>"Add game"</item>
++    <item>"Version not specified"</item>
++    <item>"Experimental profile"</item>
++    <item>"Profile included"</item>
++    <item>"Nearest neighbor (fastest, blocky)"</item>
++    <item>"Bilinear (fastest, softest)"</item>
++    <item>"FSR 1 (sharp, fast; too bright on Qualcomm's driver in some games)"</item>
++    <item>"Native (sharpest, slowest)"</item>
++    <item>"Slower"</item>
++    <item>"Faster"</item>
++    <item>"Lower"</item>
++    <item>"Higher"</item>
++    <item>"Second screen"</item>
++    <item>"Games without a companion"</item>
++    <item>"Swap screens"</item>
++    <item>"Dual-screen companions"</item>
++    <item>"TV and monitors"</item>
++    <item>"Screen rotation"</item>
++    <item>"Keep the screen on while preparing"</item>
++    <item>"Reset to default"</item>
++    <item>"Back to the game menu"</item>
++    <item>"Game menu"</item>
++    <item>"Game paused"</item>
++  </string-array>
++</resources>
+\ No newline at end of file
